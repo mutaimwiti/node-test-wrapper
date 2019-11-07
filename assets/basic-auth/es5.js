@@ -20,11 +20,12 @@ const app = {
    * required permission(s).
    *
    * @param user
-   * @returns {Promise<void>}
    */
-  async login(user) {
+  login(user) {
     // add logic to generate user authentication credentials here ...
     // replace the username and password with the actual values
+    // your persistence system is most likely asynchronous - use a
+    // callback or return a promise to handle this
     this.credentials = {
       username: 'username',
       password: 'password',
@@ -37,13 +38,13 @@ const app = {
    * having an optional argument to specify the role or permissions of the
    * user. This will allow you to assign the random user the required
    * permission(s).
-   *
-   * @returns {Promise<void>}
    */
-  async loginRandom() {
+  loginRandom() {
     // create a random user - entirely up to your persistence system
     // add logic to generate user authentication credentials here ..
     // replace the username and password with the actual values
+    // your persistence system is most likely asynchronous - use a
+    // callback or return a promise to handle this
     this.credentials = {
       username: 'username',
       password: 'password',

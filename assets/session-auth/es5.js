@@ -21,12 +21,13 @@ const app = {
    * user the required permission(s).
    *
    * @param user
-   * @returns {Promise<void>}
    */
-  async login(user) {
+  login(user) {
     // add logic to generate auth cookie here - ideally this will involve invoking
     // the login endpoint and extracting "set-cookie" from the response headers
     // replace this with the actual implementation
+    // your persistence system is most likely asynchronous - use a
+    // callback or return a promise to handle this
     this.cookie = 'generated-cookie';
   },
 
@@ -37,14 +38,14 @@ const app = {
    * you might consider having an optional argument to specify the role or
    * permissions of the user. This will allow you to assign the random
    * user the required permission(s).
-   *
-   * @returns {Promise<void>}
    */
-  async loginRandom() {
+  loginRandom() {
     // create a random user - entirely up to your persistence system
     // add logic to generate auth cookie here - ideally this will involve invoking
     // the login endpoint and extracting "set-cookie" from the response headers
     // replace this with the actual implementation
+    // your persistence system is most likely asynchronous - use a
+    // callback or return a promise to handle this
     this.cookie = 'generated-cookie';
   },
 
