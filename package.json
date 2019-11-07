@@ -1,4 +1,14 @@
 {
+  "name": "supertest-wrapper",
+  "version": "0.1.0",
+  "description": "An elegant and scalable solution for testing with supertest",
+  "main": "index.js",
+  "repository": "https://github.com/mutaimwiti/supertest-wrapper",
+  "author": "Mutai Mwiti",
+  "license": "MIT",
+  "bin": {
+    "supertest-wrapper": "./index.js"
+  },
   "dependencies": {
     "inquirer": "^7.0.0",
     "shelljs": "^0.8.3"
