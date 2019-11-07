@@ -1,12 +1,8 @@
-const inquirer = require('inquirer');
-
-const questions = require('./cli');
+const inquire = require('./inquirer');
 const {copyTemplate} = require('./utils/file');
 
 const run = async () => {
-  const response = await inquirer.prompt(questions);
-
-  const {version, auth, filePath} = response;
+  const {version, auth, filePath} = await inquire();
 
   copyTemplate(auth, version, filePath);
 

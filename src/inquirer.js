@@ -1,6 +1,7 @@
+const inquirer = require('inquirer');
 const {fileAvailable} = require('./utils/file');
 
-const cli = [
+const questions = [
   {
     name: 'version',
     type: 'list',
@@ -26,4 +27,8 @@ const cli = [
   },
 ];
 
-module.exports = cli;
+const inquire = () => {
+  return inquirer.prompt(questions);
+};
+
+module.exports = inquire;
