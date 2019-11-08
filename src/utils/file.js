@@ -2,6 +2,19 @@ const fs = require('fs');
 const shell = require('shelljs');
 
 /**
+ * Append a '.js' extension to the supplied file path if it does not have one.
+ * If it has a '.js' extension it is returned unaltered. If it ends with '.',
+ * 'js' is appended. Otherwise, '.js' is appended.
+ *
+ * @param filePath
+ * @returns {string}
+ */
+const jsExtensionPath = (filePath) => {
+  return filePath.endsWith('.js') ?
+    filePath : filePath + (filePath.endsWith('.') ? 'js' : '.js');
+};
+
+/**
  * Check if the supplied file path is available i.e. does not exist.
  * Returns true or a string describing why it is not compatible.
  *
@@ -17,9 +30,11 @@ const fileAvailable = filePath => {
     return `'${filePath}' is not a valid file path`;
   }
 
-  if (fs.existsSync(filePath)) {
-    const stats = fs.statSync(filePath);
-    return stats.isDirectory() ? `'${filePath}' is a directory` : `File '${filePath}' already exists`;
+  const jsPath = jsExtensionPath(filePath);
+
+  if (fs.existsSync(jsPath)) {
+    const stats = fs.statSync(jsPath);
+    return stats.isDirectory() ? `'${jsPath}' is a directory` : `File '${jsPath}' already exists`;
   }
 
   return true;
@@ -52,12 +67,14 @@ const sanitizeTemplateDestination = (destination) => {
 const copyTemplate = (authType, es6Version, destination) => {
   const source = __dirname + `/../assets/${authType}/${es6Version}.js`;
 
+  destination = jsExtensionPath(destination);
+
   sanitizeTemplateDestination(destination);
 
   fs.copyFileSync(source, destination);
 };
 
 module.exports = {
-  fileAvailable,
   copyTemplate,
+  fileAvailable,
 };
