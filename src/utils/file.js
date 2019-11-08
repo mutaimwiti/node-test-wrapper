@@ -60,14 +60,14 @@ const sanitizeTemplateDestination = (destination) => {
 
 /**
  *
- * @param authType
- * @param es6Version
- * @param destination
+ * @param props
  */
-const copyTemplate = (authType, es6Version, destination) => {
-  const source = __dirname + `/../assets/${authType}/${es6Version}.js`;
+const copyTemplate = (props) => {
+  const {authOpt, esVersion, filePath} = props;
 
-  destination = jsExtensionPath(destination);
+  const source = __dirname + `/../assets/${authOpt}/${esVersion}.js`;
+
+  const destination = jsExtensionPath(filePath);
 
   sanitizeTemplateDestination(destination);
 

@@ -3,13 +3,13 @@ const {fileAvailable} = require('./utils/file');
 
 const questions = [
   {
-    name: 'version',
+    name: 'esVersion',
     type: 'list',
     message: 'Which version of javascript do you want generated?',
     choices: ['es5', 'es6'],
   },
   {
-    name: 'auth',
+    name: 'authOpt',
     type: 'list',
     message: 'Which type of authentication does your app use?',
     choices: ['no-auth', 'basic-auth', 'token-auth', 'session-auth'],
@@ -19,10 +19,13 @@ const questions = [
     type: 'input',
     default: 'test/app.js',
     message: 'Specify file path for the generated supertest wrapper?',
+    filter: (input) => {
+      return input.trim();
+    },
     validate: (input) => {
       const available = fileAvailable(input);
 
-      return !(input.trim()) ? false : (available === true ? true : available);
+      return !input ? false : (available === true ? true : available);
     }
   },
 ];

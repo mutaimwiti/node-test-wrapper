@@ -2,11 +2,11 @@ const inquire = require('./inquirer');
 const {copyTemplate} = require('./utils/file');
 
 const run = async () => {
-  const {version, auth, filePath} = await inquire();
+  const response = await inquire();
 
-  copyTemplate(auth, version, filePath);
+  copyTemplate(response);
 
-  console.log(`Supertest wrapper was created successfully`);
+  console.info(`Supertest wrapper was created successfully`);
 };
 
 module.exports = run;
