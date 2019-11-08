@@ -17,7 +17,7 @@ const questions = [
   {
     name: 'filePath',
     type: 'input',
-    default: 'tests/app.js',
+    default: 'test/app.js',
     message: 'Specify file path for the generated supertest wrapper?',
     validate: (input) => {
       const available = fileAvailable(input);
