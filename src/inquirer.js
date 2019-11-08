@@ -1,6 +1,6 @@
-import inquirer from "inquirer";
-import {toWarning} from "./utils/message";
-import {fileAvailable} from "./utils/file";
+import inquirer from 'inquirer';
+import {toWarning} from './utils/message';
+import {fileAvailable} from './utils/file';
 
 
 const questions = [
@@ -21,22 +21,22 @@ const questions = [
     type: 'input',
     default: 'test/app.js',
     message: 'Specify file path for the generated supertest wrapper?',
-    filter: (input) => {
-      return input.trim();
-    },
+    filter: (input) => input.trim(),
     validate: (input) => {
+      if (!input) {
+        return false;
+      }
+
       const available = fileAvailable(input);
 
-      return !input ? false : (available === true ? true : toWarning(available));
-    }
+      return (available === true) ? available : toWarning(available);
+    },
   },
 ];
 
 /**
  * @returns {Promise}
  */
-const inquire = () => {
-  return inquirer.prompt(questions);
-};
+const inquire = () => inquirer.prompt(questions);
 
 export default inquire;
