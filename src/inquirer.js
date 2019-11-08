@@ -31,6 +31,9 @@ const questions = [
   },
 ];
 
+/**
+ * @returns {Promise}
+ */
 const inquire = () => {
   return inquirer.prompt(questions);
 };

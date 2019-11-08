@@ -14,6 +14,15 @@ const logInfo = message => {
 };
 
 /**
+ * Log warning message.
+ *
+ * @param message
+ */
+const logWarning = message => {
+  log('red', message);
+};
+
+/**
  * Log success message.
  *
  * @param message
@@ -35,5 +44,6 @@ const toWarning = message => {
 module.exports = {
   logInfo,
   toWarning,
+  logWarning,
   logSuccess,
 };
