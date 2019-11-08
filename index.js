@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-const wrapper = require('./src/wrapper');
+const wrapper = require('./lib/wrapper');
 
 wrapper();

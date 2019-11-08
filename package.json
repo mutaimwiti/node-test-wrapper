@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "An elegant and scalable solution for testing with supertest",
   "main": "index.js",
+  "scripts": {
+    "clean": "rimraf lib",
+    "build": "babel -d lib/ src/"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mutaimwiti/supertest-wrapper.git"
@@ -33,5 +37,11 @@
     "inquirer": "^7.0.0",
     "is-invalid-path": "^1.0.2",
     "shelljs": "^0.8.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "rimraf": "^3.0.0"
   }
 }
