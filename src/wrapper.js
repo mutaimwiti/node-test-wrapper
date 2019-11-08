@@ -1,6 +1,7 @@
-const inquire = require('./inquirer');
-const {copyTemplate} = require('./utils/file');
-const {logInfo, logSuccess, logWarning} = require('./utils/message');
+import inquire from "./inquirer";
+import {copyTemplate} from "./utils/file";
+import {logInfo, logSuccess, logWarning} from "./utils/message";
+
 
 const run = () => {
   logInfo('Supertest wrapper interactive CLI');
@@ -8,11 +9,11 @@ const run = () => {
   inquire()
     .then(response => {
       copyTemplate(response);
-      logSuccess('Supertest wrapper was created generated');
+      logSuccess('The supertest wrapper was created generated successfully');
     })
     .catch(() => {
       logWarning('Something went wrong - the wrapper was not generated. Please try again...');
     });
 };
 
-module.exports = run;
+export default run;

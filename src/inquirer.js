@@ -1,6 +1,7 @@
-const inquirer = require('inquirer');
-const {toWarning} = require('./utils/message');
-const {fileAvailable} = require('./utils/file');
+import inquirer from "inquirer";
+import {toWarning} from "./utils/message";
+import {fileAvailable} from "./utils/file";
+
 
 const questions = [
   {
@@ -38,4 +39,4 @@ const inquire = () => {
   return inquirer.prompt(questions);
 };
 
-module.exports = inquire;
+export default inquire;

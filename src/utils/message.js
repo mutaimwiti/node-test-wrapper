@@ -1,4 +1,4 @@
-const chalk = require('chalk');
+import chalk from "chalk";
 
 const log = (color, message) => {
   console.log(chalk[color](message));
@@ -41,7 +41,7 @@ const toWarning = message => {
   return chalk.red(message)
 };
 
-module.exports = {
+export {
   logInfo,
   toWarning,
   logWarning,

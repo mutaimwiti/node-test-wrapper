@@ -1,6 +1,6 @@
-const fs = require('fs');
-const shell = require('shelljs');
-const isInvalidPath = require('is-invalid-path');
+import fs from "fs";
+import shell from "shelljs";
+import isInvalidPath from "is-invalid-path";
 
 /**
  * Append a '.js' extension to the supplied file path if it does not have one.
@@ -10,7 +10,7 @@ const isInvalidPath = require('is-invalid-path');
  * @param filePath
  * @returns {string}
  */
-const jsExtensionPath = (filePath) => {
+const jsExtensionPath = filePath => {
   return filePath.endsWith('.js') ?
     filePath : filePath + (filePath.endsWith('.') ? 'js' : '.js');
 };
@@ -48,7 +48,7 @@ const fileAvailable = filePath => {
  *
  * @param destination
  */
-const sanitizeTemplateDestination = (destination) => {
+const sanitizeTemplateDestination = destination => {
   const parts = destination.split('/');
 
   parts.pop();
@@ -66,7 +66,7 @@ const sanitizeTemplateDestination = (destination) => {
  *
  * @param options
  */
-const copyTemplate = (options) => {
+const copyTemplate = options => {
   const {authOpt, esVersion, filePath} = options;
 
   const source = __dirname + `/../../assets/${authOpt}/${esVersion}.js`;
@@ -78,7 +78,7 @@ const copyTemplate = (options) => {
   fs.copyFileSync(source, destination);
 };
 
-module.exports = {
+export {
   copyTemplate,
   fileAvailable,
 };
