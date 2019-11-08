@@ -3,9 +3,27 @@
   "version": "0.1.0",
   "description": "An elegant and scalable solution for testing with supertest",
   "main": "index.js",
-  "repository": "https://github.com/mutaimwiti/supertest-wrapper",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mutaimwiti/supertest-wrapper.git"
+  },
+  "keywords": [
+    "tdd",
+    "node",
+    "auth",
+    "testing",
+    "express",
+    "wrapper",
+    "supertest",
+    "auth-wrapper",
+    "supertest-wrapper"
+  ],
   "author": "Mutai Mwiti",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mutaimwiti/supertest-wrapper/issues"
+  },
+  "homepage": "https://gitlab.com/mutaimwiti/supertest-wrapper#readme",
   "bin": {
     "supertest-wrapper": "./index.js"
   },
