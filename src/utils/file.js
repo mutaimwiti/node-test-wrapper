@@ -61,11 +61,13 @@ const sanitizeTemplateDestination = (destination) => {
 };
 
 /**
+ * Copy the correct supertest wrapper template based on the options specified
+ * by the user.
  *
- * @param props
+ * @param options
  */
-const copyTemplate = (props) => {
-  const {authOpt, esVersion, filePath} = props;
+const copyTemplate = (options) => {
+  const {authOpt, esVersion, filePath} = options;
 
   const source = __dirname + `/../assets/${authOpt}/${esVersion}.js`;
 
