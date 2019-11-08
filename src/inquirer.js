@@ -1,11 +1,12 @@
 const inquirer = require('inquirer');
+const {toWarning} = require('./utils/message');
 const {fileAvailable} = require('./utils/file');
 
 const questions = [
   {
     name: 'esVersion',
     type: 'list',
-    message: 'Which version of javascript do you want generated?',
+    message: 'Which version of javascript do you want to generate?',
     choices: ['es5', 'es6'],
   },
   {
@@ -25,7 +26,7 @@ const questions = [
     validate: (input) => {
       const available = fileAvailable(input);
 
-      return !input ? false : (available === true ? true : available);
+      return !input ? false : (available === true ? true : toWarning(available));
     }
   },
 ];

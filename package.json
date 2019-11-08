@@ -8,6 +8,7 @@
     "url": "git+https://github.com/mutaimwiti/supertest-wrapper.git"
   },
   "keywords": [
+    "cli",
     "tdd",
     "node",
     "auth",
@@ -28,6 +29,7 @@
     "supertest-wrapper": "./index.js"
   },
   "dependencies": {
+    "chalk": "^2.4.2",
     "inquirer": "^7.0.0",
     "shelljs": "^0.8.3"
   }
