@@ -1,5 +1,6 @@
 const fs = require('fs');
 const shell = require('shelljs');
+const isInvalidPath = require('is-invalid-path');
 
 /**
  * Append a '.js' extension to the supplied file path if it does not have one.
@@ -16,18 +17,19 @@ const jsExtensionPath = (filePath) => {
 
 /**
  * Check if the supplied file path is available i.e. does not exist.
- * Returns true or a string describing why it is not compatible.
+ * Returns true or a string describing why the file path cannot be
+ * used.
  *
  * @param filePath
  * @returns {(boolean|string)}
  */
 const fileAvailable = filePath => {
-  if (filePath.startsWith('/')) {
-    return `Specify a relative file path`;
+  if (isInvalidPath(filePath) || filePath.endsWith('/') || filePath.endsWith('\\')) {
+    return `'${filePath}' is not a valid file path`;
   }
 
-  if (filePath.endsWith('/')) {
-    return `'${filePath}' is not a valid file path`;
+  if (filePath.startsWith('/') || filePath.startsWith('\\')) {
+    return `Specify a relative file path`;
   }
 
   const jsPath = jsExtensionPath(filePath);
