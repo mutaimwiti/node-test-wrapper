@@ -1,13 +1,12 @@
-import inquire from "./inquirer";
-import {copyTemplate} from "./utils/file";
-import {logInfo, logSuccess, logWarning} from "./utils/message";
-
+import inquire from './inquirer';
+import { copyTemplate } from './utils/file';
+import { logInfo, logSuccess, logWarning } from './utils/message';
 
 const run = () => {
   logInfo('Supertest wrapper interactive CLI');
 
   inquire()
-    .then(response => {
+    .then((response) => {
       copyTemplate(response);
       logSuccess('The supertest wrapper was created generated successfully');
     })

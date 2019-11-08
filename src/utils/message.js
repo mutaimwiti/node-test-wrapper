@@ -1,6 +1,7 @@
-import chalk from "chalk";
+import chalk from 'chalk';
 
 const log = (color, message) => {
+  // eslint-disable-next-line no-console
   console.log(chalk[color](message));
 };
 
@@ -9,7 +10,7 @@ const log = (color, message) => {
  *
  * @param message
  */
-const logInfo = message => {
+const logInfo = (message) => {
   log('blue', message);
 };
 
@@ -18,7 +19,7 @@ const logInfo = message => {
  *
  * @param message
  */
-const logWarning = message => {
+const logWarning = (message) => {
   log('red', message);
 };
 
@@ -27,7 +28,7 @@ const logWarning = message => {
  *
  * @param message
  */
-const logSuccess = message => {
+const logSuccess = (message) => {
   log('green', message);
 };
 
@@ -37,9 +38,7 @@ const logSuccess = message => {
  * @param message
  * @returns {*}
  */
-const toWarning = message => {
-  return chalk.red(message)
-};
+const toWarning = (message) => chalk.red(message);
 
 export {
   logInfo,

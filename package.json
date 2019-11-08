@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf lib",
-    "build": "babel -d lib/ src/"
+    "build": "babel -d lib/ src/",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -42,6 +43,9 @@
     "@babel/cli": "^7.7.0",
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
     "rimraf": "^3.0.0"
   }
 }

@@ -1,6 +1,6 @@
-import fs from "fs";
-import shell from "shelljs";
-import isInvalidPath from "is-invalid-path";
+import fs from 'fs';
+import shell from 'shelljs';
+import isInvalidPath from 'is-invalid-path';
 
 /**
  * Append a '.js' extension to the supplied file path if it does not have one.
@@ -10,10 +10,8 @@ import isInvalidPath from "is-invalid-path";
  * @param filePath
  * @returns {string}
  */
-const jsExtensionPath = filePath => {
-  return filePath.endsWith('.js') ?
-    filePath : filePath + (filePath.endsWith('.') ? 'js' : '.js');
-};
+const jsExtensionPath = (filePath) => (filePath.endsWith('.js')
+  ? filePath : filePath + (filePath.endsWith('.') ? 'js' : '.js'));
 
 /**
  * Check if the supplied file path is available i.e. does not exist.
@@ -23,13 +21,13 @@ const jsExtensionPath = filePath => {
  * @param filePath
  * @returns {(boolean|string)}
  */
-const fileAvailable = filePath => {
+const fileAvailable = (filePath) => {
   if (isInvalidPath(filePath) || filePath.endsWith('/') || filePath.endsWith('\\')) {
     return `'${filePath}' is not a valid file path`;
   }
 
   if (filePath.startsWith('/') || filePath.startsWith('\\')) {
-    return `Specify a relative file path`;
+    return 'Specify a relative file path';
   }
 
   const jsPath = jsExtensionPath(filePath);
@@ -48,7 +46,7 @@ const fileAvailable = filePath => {
  *
  * @param destination
  */
-const sanitizeTemplateDestination = destination => {
+const sanitizeTemplateDestination = (destination) => {
   const parts = destination.split('/');
 
   parts.pop();
@@ -66,10 +64,10 @@ const sanitizeTemplateDestination = destination => {
  *
  * @param options
  */
-const copyTemplate = options => {
-  const {authOpt, esVersion, filePath} = options;
+const copyTemplate = (options) => {
+  const { authOpt, esVersion, filePath } = options;
 
-  const source = __dirname + `/../../assets/${authOpt}/${esVersion}.js`;
+  const source = `${__dirname}/../../assets/${authOpt}/${esVersion}.js`;
 
   const destination = jsExtensionPath(filePath);
 
