@@ -5,7 +5,7 @@ const app = {
   /**
    * @private
    */
-  request: supertest(appDef),
+  client: supertest(appDef),
 
   /**
    * @private
@@ -79,31 +79,31 @@ const app = {
   // you can add more methods offered by supertest
 
   get(url) {
-    const req = this.request.get(url);
+    const req = this.client.get(url);
 
     return this.preRequest(req);
   },
 
   post(url) {
-    const req = this.request.post(url);
+    const req = this.client.post(url);
 
     return this.preRequest(req);
   },
 
   put(url) {
-    const req = this.request.put(url);
+    const req = this.client.put(url);
 
     return this.preRequest(req);
   },
 
   patch(url) {
-    const req = this.request.patch(url);
+    const req = this.client.patch(url);
 
     return this.preRequest(req);
   },
 
   delete(url) {
-    const req = this.request.delete(url);
+    const req = this.client.delete(url);
 
     return this.preRequest(req);
   },
