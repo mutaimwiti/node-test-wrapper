@@ -1,16 +1,13 @@
 import supertest from 'supertest';
 import appDef from '../path/to/your/app';
 
-class app {
-  /**
-   * @private
-   */
-  static request = supertest(appDef);
-
-  /**
-   * @private
-   */
-  static cookie = null;
+class App {
+  constructor() {
+    /** @private */
+    this.request = supertest(appDef);
+    /** @private */
+    this.cookie = null;
+  }
 
   /**
    * When this method is called it generates a session cookie based on the details of
@@ -23,7 +20,7 @@ class app {
    * @param user
    * @returns {Promise<void>}
    */
-  static async login(user) {
+  async login(user) {
     // add logic to generate auth cookie here - ideally this will involve invoking
     // the login endpoint and extracting "set-cookie" from the response headers
     // replace this with the actual implementation
@@ -38,7 +35,7 @@ class app {
    *
    * @returns {Promise<void>}
    */
-  static async loginRandom() {
+  async loginRandom() {
     // create a random user - entirely up to your persistence system
     // add logic to generate auth cookie here - ideally this will involve invoking
     // the login endpoint and extracting "set-cookie" from the response headers
@@ -51,7 +48,7 @@ class app {
    * This means that calls to http wrapper methods generate request objects
    * that don't have the authentication header.
    */
-  static logout() {
+  logout() {
     // remove authentication cookie
     this.cookie = null;
   }
@@ -65,7 +62,7 @@ class app {
    * @returns {*}
    * @private
    */
-  static preRequest(request) {
+  preRequest(request) {
     // add pre-request logic
     // set the authorization header
     return this.cookie ? request.set('cookie', this.cookie) : request;
@@ -75,35 +72,35 @@ class app {
   // get(), post(), put(), patch(), delete()
   // you can add more methods offered by supertest
 
-  static get(url) {
+  get(url) {
     const req = this.request.get(url);
 
     return this.preRequest(req);
   }
 
-  static post(url) {
+  post(url) {
     const req = this.request.post(url);
 
     return this.preRequest(req);
   }
 
-  static put(url) {
+  put(url) {
     const req = this.request.put(url);
 
     return this.preRequest(req);
   }
 
-  static patch(url) {
+  patch(url) {
     const req = this.request.patch(url);
 
     return this.preRequest(req);
   }
 
-  static delete(url) {
+  delete(url) {
     const req = this.request.delete(url);
 
     return this.preRequest(req);
   }
 }
 
-export default app;
+export default new App();

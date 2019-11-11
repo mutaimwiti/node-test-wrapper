@@ -1,11 +1,11 @@
 import supertest from 'supertest';
 import appDef from '../path/to/your/app';
 
-class app {
-  /**
-   * @private
-   */
-  static request = supertest(appDef);
+class App {
+  constructor() {
+    /** @private */
+    this.request = supertest(appDef);
+  }
 
   /**
    * This method contains pre-request logic. It is executed by all http
@@ -16,7 +16,7 @@ class app {
    * @returns {*}
    * @private
    */
-  static preRequest(request) {
+  preRequest(request) {
     // add pre-request logic - alter request object
     return request;
   }
@@ -25,35 +25,35 @@ class app {
   // get(), post(), put(), patch(), delete()
   // you can add more methods offered by supertest
 
-  static get(url) {
+  get(url) {
     const req = this.request.get(url);
 
     return this.preRequest(req);
   }
 
-  static post(url) {
+  post(url) {
     const req = this.request.post(url);
 
     return this.preRequest(req);
   }
 
-  static put(url) {
+  put(url) {
     const req = this.request.put(url);
 
     return this.preRequest(req);
   }
 
-  static patch(url) {
+  patch(url) {
     const req = this.request.patch(url);
 
     return this.preRequest(req);
   }
 
-  static delete(url) {
+  delete(url) {
     const req = this.request.delete(url);
 
     return this.preRequest(req);
   }
 }
 
-export default app;
+export default new App();
