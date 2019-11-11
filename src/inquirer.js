@@ -1,7 +1,6 @@
 import inquirer from 'inquirer';
-import {toWarning} from './utils/message';
-import {fileAvailable} from './utils/file';
-
+import { toWarning } from './utils/message';
+import { fileAvailable } from './utils/file';
 
 const questions = [
   {
@@ -29,7 +28,7 @@ const questions = [
 
       const available = fileAvailable(input);
 
-      return (available === true) ? available : toWarning(available);
+      return available === true ? available : toWarning(available);
     },
   },
 ];

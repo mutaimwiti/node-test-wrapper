@@ -11,7 +11,9 @@ const run = () => {
       logSuccess('The supertest wrapper was created generated successfully');
     })
     .catch(() => {
-      logWarning('Something went wrong - the wrapper was not generated. Please try again...');
+      logWarning(
+        'Something went wrong - the wrapper was not generated. Please try again...',
+      );
     });
 };
 

@@ -40,9 +40,4 @@ const logSuccess = (message) => {
  */
 const toWarning = (message) => chalk.red(message);
 
-export {
-  logInfo,
-  toWarning,
-  logWarning,
-  logSuccess,
-};
+export { logInfo, toWarning, logWarning, logSuccess };
