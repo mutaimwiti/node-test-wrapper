@@ -10,8 +10,10 @@ import isInvalidPath from 'is-invalid-path';
  * @param filePath
  * @returns {string}
  */
-const jsExtensionPath = (filePath) => (filePath.endsWith('.js')
-  ? filePath : filePath + (filePath.endsWith('.') ? 'js' : '.js'));
+const jsExtensionPath = (filePath) =>
+  filePath.endsWith('.js')
+    ? filePath
+    : filePath + (filePath.endsWith('.') ? 'js' : '.js');
 
 /**
  * Check if the supplied file path is available i.e. does not exist.
@@ -22,7 +24,11 @@ const jsExtensionPath = (filePath) => (filePath.endsWith('.js')
  * @returns {(boolean|string)}
  */
 const fileAvailable = (filePath) => {
-  if (isInvalidPath(filePath) || filePath.endsWith('/') || filePath.endsWith('\\')) {
+  if (
+    isInvalidPath(filePath) ||
+    filePath.endsWith('/') ||
+    filePath.endsWith('\\')
+  ) {
     return `'${filePath}' is not a valid file path`;
   }
 
@@ -34,7 +40,9 @@ const fileAvailable = (filePath) => {
 
   if (fs.existsSync(jsPath)) {
     const stats = fs.statSync(jsPath);
-    return stats.isDirectory() ? `'${jsPath}' is a directory` : `File '${jsPath}' already exists`;
+    return stats.isDirectory()
+      ? `'${jsPath}' is a directory`
+      : `File '${jsPath}' already exists`;
   }
 
   return true;
@@ -76,7 +84,4 @@ const copyTemplate = (options) => {
   fs.copyFileSync(source, destination);
 };
 
-export {
-  copyTemplate,
-  fileAvailable,
-};
+export { copyTemplate, fileAvailable };
