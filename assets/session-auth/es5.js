@@ -108,3 +108,5 @@ const app = {
     return this.preRequest(req);
   },
 };
+
+module.exports = app;

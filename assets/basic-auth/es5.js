@@ -73,7 +73,9 @@ const app = {
   preRequest(request) {
     // add pre-request logic
     // set the authentication header
-    return this.credentials ? request.auth(this.credentials.username, this.credentials.password) : request;
+    return this.credentials
+      ? request.auth(this.credentials.username, this.credentials.password)
+      : request;
   },
 
   // http wrapper methods
