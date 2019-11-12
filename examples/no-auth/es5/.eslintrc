@@ -3,6 +3,7 @@
     "jest": true
   },
   "rules": {
+    "prefer-destructuring": "off",
     "func-names": "off",
     "no-console": "off"
   }
