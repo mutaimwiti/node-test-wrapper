@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const appDef = require('../../app');
+const appDef = require('../../src/app');
 
 const app = {
   /**
