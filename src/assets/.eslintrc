@@ -3,18 +3,13 @@
     "import/no-unresolved": [
       "error",
       {
-        "ignore": [
-          "supertest",
-          "../path/to/your/app"
-        ]
+        "ignore": ["supertest", "../path/to/your/app"]
       }
     ],
     "class-methods-use-this": [
       "error",
       {
-        "exceptMethods": [
-          "preRequest"
-        ]
+        "exceptMethods": ["preRequest"]
       }
     ],
     "no-unused-vars": [
@@ -22,6 +17,7 @@
       {
         "argsIgnorePattern": "user"
       }
-    ]
+    ],
+    "import/no-extraneous-dependencies": "off"
   }
 }
