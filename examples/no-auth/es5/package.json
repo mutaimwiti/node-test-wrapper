@@ -1,0 +1,14 @@
+{
+  "name": "basic-auth",
+  "version": "1.0.0",
+  "description": "Basic auth example",
+  "main": "index.js",
+  "author": "Mutai Mwiti",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "start": "nodemon index.js"
+  }
+}
