@@ -16,7 +16,7 @@ router.post('/articles', function(req, res) {
   return res.json({ articles: 'Created article' });
 });
 
-router.patch('/articles/:id', function(req, res) {
+router.put('/articles/:id', function(req, res) {
   const { id } = req.params;
 
   return res.json({ articles: `Updated article ${id}` });
