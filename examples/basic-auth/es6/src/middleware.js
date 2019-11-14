@@ -1,5 +1,5 @@
 import auth from 'basic-auth';
-import { mockUsers } from './__mock__';
+import { findUser } from './utils';
 
 const checkAuth = (req, res, next) => {
   if (req.path === '/') {
@@ -8,14 +8,12 @@ const checkAuth = (req, res, next) => {
 
   const reqUser = auth(req);
 
-  if (reqUser !== undefined) {
+  if (reqUser) {
     const { name, pass } = reqUser;
 
-    const found = mockUsers.find(function({ username, password }) {
-      return username === name && password === pass;
-    });
+    const data = { username: name, password: pass };
 
-    if (found) {
+    if (findUser(data)) {
       return next();
     }
   }
