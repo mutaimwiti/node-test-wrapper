@@ -1,6 +1,12 @@
 import jwt from 'jsonwebtoken';
+import { mockUsers } from './__mock__';
 
 const SECRET = 'secret';
+
+const findUser = (data) =>
+  mockUsers.find(function(user) {
+    return user.username === data.username && user.password === data.password;
+  });
 
 const generateAuthToken = (data) => jwt.sign(data, SECRET);
 
@@ -19,4 +25,4 @@ const renderUnAuthorized = (res) =>
     message: 'Unauthorized',
   });
 
-export { decodeAuthToken, generateAuthToken, renderUnAuthorized };
+export { findUser, decodeAuthToken, generateAuthToken, renderUnAuthorized };
