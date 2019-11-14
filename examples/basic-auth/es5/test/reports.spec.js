@@ -2,7 +2,7 @@ const app = require('./utils/app');
 
 describe('Reports', function() {
   describe('GET', function() {
-    it('should not allow unauthenticated users to list all reports', function(done) {
+    it('should not allow unauthenticated users to list all Reports', function(done) {
       app.get('/reports').expect(401, done);
     });
 
@@ -26,7 +26,7 @@ describe('Reports', function() {
       app.loginRandom();
 
       app.get('/reports/6').then(function({ body }) {
-        expect(body.reports).toEqual('Report 6');
+        expect(body.report).toEqual('Report 6');
         app.logout();
         done();
       });
@@ -41,11 +41,14 @@ describe('Reports', function() {
     it('should allow authenticated users to get create reports', function(done) {
       app.loginRandom();
 
-      app.post('/reports').then(function({ body }) {
-        expect(body.reports).toEqual('Created report');
-        app.logout();
-        done();
-      });
+      app
+        .post('/reports')
+        .send({ title: 'foo' })
+        .then(function({ body }) {
+          expect(body.message).toEqual('Created report foo');
+          app.logout();
+          done();
+        });
     });
   });
 
@@ -58,7 +61,7 @@ describe('Reports', function() {
       app.loginRandom();
 
       app.put('/reports/14').then(function({ body }) {
-        expect(body.reports).toEqual('Updated report 14');
+        expect(body.message).toEqual('Updated report 14');
         app.logout();
         done();
       });
@@ -74,7 +77,7 @@ describe('Reports', function() {
       app.loginRandom();
 
       app.delete('/reports/2').then(function({ body }) {
-        expect(body.reports).toEqual('Deleted report 2');
+        expect(body.message).toEqual('Deleted report 2');
         app.logout();
         done();
       });
