@@ -1,7 +1,6 @@
 const utils = require('./utils');
-const mock = require('./__mock__');
 
-const mockUsers = mock.mockUsers;
+const findUser = utils.findUser;
 const decodeAuthToken = utils.decodeAuthToken;
 const renderUnAuthorized = utils.renderUnAuthorized;
 
@@ -11,18 +10,7 @@ function checkAuth(req, res, next) {
   }
 
   return decodeAuthToken(req, function(err, reqUser) {
-    let found = false;
-
-    if (reqUser) {
-      found = mockUsers.find(function(user) {
-        return (
-          user.username === reqUser.username &&
-          user.password === reqUser.password
-        );
-      });
-    }
-
-    return found ? next() : renderUnAuthorized(res);
+    return findUser(reqUser) ? next() : renderUnAuthorized(res);
   });
 }
 
