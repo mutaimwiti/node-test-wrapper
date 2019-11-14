@@ -7,25 +7,27 @@ router.get('/', function(req, res) {
 });
 
 router.get('/:id', function(req, res) {
-  const { id } = req.params;
+  const id = req.params.id;
 
-  return res.json({ articles: `Article ${id}` });
+  return res.json({ article: `Article ${id}` });
 });
 
 router.post('/', function(req, res) {
-  return res.json({ articles: 'Created article' });
+  const title = req.body.title;
+
+  return res.json({ message: `Created article ${title}` });
 });
 
 router.put('/:id', function(req, res) {
   const { id } = req.params;
 
-  return res.json({ articles: `Updated article ${id}` });
+  return res.json({ message: `Updated article ${id}` });
 });
 
 router.delete('/:id', function(req, res) {
   const { id } = req.params;
 
-  return res.json({ articles: `Deleted article ${id}` });
+  return res.json({ message: `Deleted article ${id}` });
 });
 
 module.exports = router;
