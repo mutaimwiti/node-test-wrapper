@@ -10,22 +10,24 @@ describe('Reports', () => {
   it('should get one report', async () => {
     const { body } = await app.get('/reports/6');
 
-    expect(body.reports).toEqual('Report 6');
+    expect(body.report).toEqual('Report 6');
   });
 
   it('should create an report', async () => {
-    const { body } = await app.post('/reports');
+    const { body } = await app.post('/reports').send({title: 'foo'});
 
-    expect(body.reports).toEqual('Created report');
+    expect(body.message).toEqual('Created report foo');
   });
 
   it('should update an report', async () => {
     const { body } = await app.put('/reports/14');
-    expect(body.reports).toEqual('Updated report 14');
+
+    expect(body.message).toEqual('Updated report 14');
   });
 
   it('should delete an report', async () => {
     const { body } = await app.delete('/reports/2');
-    expect(body.reports).toEqual('Deleted report 2');
+
+    expect(body.message).toEqual('Deleted report 2');
   });
 });
