@@ -25,7 +25,7 @@ describe('Reports', function() {
     it('should allow authenticated users to get one report', function(done) {
       app.loginRandom(function() {
         app.get('/reports/6').then(function({ body }) {
-          expect(body.reports).toEqual('Report 6');
+          expect(body.report).toEqual('Report 6');
           app.logout();
           done();
         });
@@ -40,11 +40,14 @@ describe('Reports', function() {
 
     it('should allow authenticated users to get create reports', function(done) {
       app.loginRandom(function() {
-        app.post('/reports').then(function({ body }) {
-          expect(body.reports).toEqual('Created report');
-          app.logout();
-          done();
-        });
+        app
+          .post('/reports')
+          .send({ title: 'foo' })
+          .then(function({ body }) {
+            expect(body.message).toEqual('Created report foo');
+            app.logout();
+            done();
+          });
       });
     });
   });
@@ -57,7 +60,7 @@ describe('Reports', function() {
     it('should allow authenticated users to update an report', function(done) {
       app.loginRandom(function() {
         app.put('/reports/14').then(function({ body }) {
-          expect(body.reports).toEqual('Updated report 14');
+          expect(body.message).toEqual('Updated report 14');
           app.logout();
           done();
         });
@@ -73,7 +76,7 @@ describe('Reports', function() {
     it('should allow authenticated users to delete an report', function(done) {
       app.loginRandom(function() {
         app.delete('/reports/2').then(function({ body }) {
-          expect(body.reports).toEqual('Deleted report 2');
+          expect(body.message).toEqual('Deleted report 2');
           app.logout();
           done();
         });

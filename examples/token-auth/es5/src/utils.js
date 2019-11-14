@@ -6,6 +6,8 @@ const mockUsers = mock.mockUsers;
 const SECRET = 'secret';
 
 function findUser(data) {
+  if (!data) return null;
+
   return mockUsers.find(function(user) {
     return user.username === data.username && user.password === data.password;
   });
