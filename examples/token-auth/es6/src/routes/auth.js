@@ -1,20 +1,12 @@
 import { Router } from 'express';
-import { mockUsers } from '../__mock__';
-import { generateAuthToken, renderUnAuthorized } from '../utils';
+import { findUser, generateAuthToken, renderUnAuthorized } from '../utils';
 
 const router = Router();
 
 router.post('/login', (req, res) => {
-  const data = {
-    name: req.body.username,
-    pass: req.body.password,
-  };
+  const data = req.body;
 
-  const found = mockUsers.find(
-    (user) => user.username === data.name && user.password === data.pass,
-  );
-
-  if (found) {
+  if (findUser(data)) {
     try {
       const token = generateAuthToken(data);
 
