@@ -1,0 +1,26 @@
+{
+  "name": "basic-auth",
+  "version": "1.0.0",
+  "description": "Token auth ES6 example",
+  "main": "index.js",
+  "author": "Mutai Mwiti",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon --exec babel-node index.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.7.2",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "supertest": "^4.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/node": "^7.7.0",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.7.1",
+    "jest": "^24.9.0",
+    "nodemon": "^1.19.4"
+  }
+}
