@@ -1,7 +1,7 @@
 const auth = require('basic-auth');
-const mock = require('./__mock__');
+const utils = require('./utils');
 
-const mockUsers = mock.mockUsers;
+const findUser = utils.findUser;
 
 function checkAuth(req, res, next) {
   if (req.path === '/') {
@@ -10,12 +10,13 @@ function checkAuth(req, res, next) {
 
   const reqUser = auth(req);
 
-  if (reqUser !== undefined) {
-    const found = mockUsers.find(function(user) {
-      return user.username === reqUser.name && user.password === reqUser.pass;
-    });
+  if (reqUser) {
+    const user = {
+      username: reqUser.name,
+      password: reqUser.pass,
+    };
 
-    if (found) {
+    if (findUser(user)) {
       return next();
     }
   }
