@@ -6,6 +6,8 @@ const checkAuth = middleware.checkAuth;
 
 const app = express();
 
+app.use(express.json());
+
 app.use(checkAuth);
 
 app.get('/', function(req, res) {

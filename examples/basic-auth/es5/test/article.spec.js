@@ -26,7 +26,7 @@ describe('Articles', function() {
       app.loginRandom();
 
       app.get('/articles/6').then(function({ body }) {
-        expect(body.articles).toEqual('Article 6');
+        expect(body.article).toEqual('Article 6');
         app.logout();
         done();
       });
@@ -41,11 +41,14 @@ describe('Articles', function() {
     it('should allow authenticated users to get create articles', function(done) {
       app.loginRandom();
 
-      app.post('/articles').then(function({ body }) {
-        expect(body.articles).toEqual('Created article');
-        app.logout();
-        done();
-      });
+      app
+        .post('/articles')
+        .send({ title: 'foo' })
+        .then(function({ body }) {
+          expect(body.message).toEqual('Created article foo');
+          app.logout();
+          done();
+        });
     });
   });
 
@@ -58,7 +61,7 @@ describe('Articles', function() {
       app.loginRandom();
 
       app.put('/articles/14').then(function({ body }) {
-        expect(body.articles).toEqual('Updated article 14');
+        expect(body.message).toEqual('Updated article 14');
         app.logout();
         done();
       });
@@ -74,7 +77,7 @@ describe('Articles', function() {
       app.loginRandom();
 
       app.delete('/articles/2').then(function({ body }) {
-        expect(body.articles).toEqual('Deleted article 2');
+        expect(body.message).toEqual('Deleted article 2');
         app.logout();
         done();
       });
