@@ -1,6 +1,6 @@
 import supertest from 'supertest';
 import appDef from '../../src/app';
-import { mockUsers } from '../../__mock__';
+import { mockUsers } from '../../src/__mock__';
 
 class App {
   constructor() {

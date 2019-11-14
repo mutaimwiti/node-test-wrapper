@@ -1,6 +1,6 @@
 import express from 'express';
 import routes from './routes';
-import { checkAuth } from '../middleware';
+import { checkAuth } from './middleware';
 
 const app = express();
 
