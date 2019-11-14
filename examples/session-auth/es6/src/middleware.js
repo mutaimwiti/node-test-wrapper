@@ -1,4 +1,4 @@
-import { mockUsers } from './__mock__';
+import { findUser } from './utils';
 
 const checkAuth = (req, res, next) => {
   if (
@@ -12,12 +12,7 @@ const checkAuth = (req, res, next) => {
   const reqUser = req.session.user;
 
   if (reqUser) {
-    const found = mockUsers.find(
-      (user) =>
-        user.username === reqUser.name && user.password === reqUser.pass,
-    );
-
-    if (found) {
+    if (findUser(reqUser)) {
       return next();
     }
   }
