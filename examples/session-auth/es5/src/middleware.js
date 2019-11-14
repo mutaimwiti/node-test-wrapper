@@ -1,6 +1,6 @@
-const mock = require('./__mock__');
+const utils = require('./utils');
 
-const mockUsers = mock.mockUsers;
+const findUser = utils.findUser;
 
 function checkAuth(req, res, next) {
   if (
@@ -14,11 +14,7 @@ function checkAuth(req, res, next) {
   const reqUser = req.session.user;
 
   if (reqUser) {
-    const found = mockUsers.find(function(user) {
-      return user.username === reqUser.name && user.password === reqUser.pass;
-    });
-
-    if (found) {
+    if (findUser(reqUser)) {
       return next();
     }
   }

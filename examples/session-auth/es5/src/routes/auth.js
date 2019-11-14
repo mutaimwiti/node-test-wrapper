@@ -1,22 +1,15 @@
 const Router = require('express').Router;
-const mock = require('../__mock__');
+const utils = require('../utils');
 
-const mockUsers = mock.mockUsers;
+const findUser = utils.findUser;
 
 const router = Router();
 
 router.post('/login', function(req, res) {
   if (!req.session.user) {
-    const data = {
-      name: req.body.username,
-      pass: req.body.password,
-    };
+    const data = req.body;
 
-    const found = mockUsers.find(function(user) {
-      return user.username === data.name && user.password === data.pass;
-    });
-
-    if (found) {
+    if (findUser(data)) {
       req.session.user = data;
       return res.status(201).json({ message: 'Logged in successfully' });
     }
