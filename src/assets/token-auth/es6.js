@@ -36,6 +36,7 @@ class App {
    */
   async loginRandom() {
     // create a random user - entirely up to your persistence system
+    // alternatively randomly select an existing user
     // add logic to generate user authentication token here ...
     // replace this with the actual implementation
     this.token = 'generated-auth-token';

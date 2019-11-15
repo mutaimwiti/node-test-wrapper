@@ -38,6 +38,7 @@ const app = {
    */
   loginRandom() {
     // create a random user - entirely up to your persistence system
+    // alternatively randomly select an existing user
     // add logic to generate user authentication token here ...
     // replace this with the actual implementation
     // your persistence system is most likely asynchronous - use a

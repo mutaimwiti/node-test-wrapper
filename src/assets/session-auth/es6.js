@@ -37,6 +37,7 @@ class App {
    */
   async loginRandom() {
     // create a random user - entirely up to your persistence system
+    // alternatively randomly select an existing user
     // add logic to generate auth cookie here - ideally this will involve invoking
     // the login endpoint and extracting "set-cookie" from the response headers
     // replace this with the actual implementation
