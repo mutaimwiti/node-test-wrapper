@@ -14,7 +14,7 @@ describe('Articles', () => {
   });
 
   it('should create an article', async () => {
-    const { body } = await app.post('/articles').send({title: 'foo'});
+    const { body } = await app.post('/articles').send({ title: 'foo' });
 
     expect(body.message).toEqual('Created article foo');
   });
