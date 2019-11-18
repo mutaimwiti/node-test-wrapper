@@ -18,7 +18,7 @@ const questions = [
   {
     name: 'filePath',
     type: 'input',
-    default: 'test/app.js',
+    default: 'test/utils/app.js',
     message: 'Specify file path for the generated supertest wrapper?',
     filter: (input) => input.trim(),
     validate: (input) => {
