@@ -3,12 +3,12 @@ import { copyTemplate } from './utils/file';
 import { logInfo, logSuccess, logWarning } from './utils/message';
 
 const run = () => {
-  logInfo('Supertest wrapper interactive CLI');
+  logInfo('App wrapper interactive CLI');
 
   inquire()
     .then((response) => {
       copyTemplate(response);
-      logSuccess('The supertest wrapper was created generated successfully');
+      logSuccess('The wrapper was created generated successfully');
     })
     .catch(() => {
       logWarning(
