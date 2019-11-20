@@ -17,12 +17,16 @@
   "keywords": [
     "cli",
     "tdd",
+    "bdd",
     "node",
     "auth",
+    "http",
+    "node",
     "testing",
     "express",
     "wrapper",
     "supertest",
+    "chai-http",
     "auth-wrapper",
     "app-wrapper"
   ],
