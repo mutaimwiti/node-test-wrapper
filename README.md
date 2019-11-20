@@ -72,3 +72,12 @@ other desired behaviors like authentication.
     - Where authentication is required invoke `login()`, `loginRandom()` or `logout()` based on the desired behavior
     - Add any other desired behaviors as functions on the wrapper. Invoke the function as and when any behavior 
     is required.
+
+### Licence
+
+[MIT](https://mit-license.org/) © Mutai Mwiti |
+[GitHub](https://github.com/mutaimwiti) |
+[GitLab](https://gitlab.com/mutaimwiti)
+
+_**DISCLAIMER:**_
+_All opinions expressed in this repository are mine and do not reflect any company or organisation I'm involved with._
