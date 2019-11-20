@@ -33,25 +33,26 @@ other desired behaviors like authentication.
     ![Alt text](assets/wrapper-generated.png?raw=true)
 
 - Customize the generated wrapper to suit the specifics of your application
-    - `../path/to/your/app` 
+    - **../path/to/your/app**
     
         Update the import with the actual path to your app. For example `../../src/app`.
         
-    - `login()`
+    - **login()**
         
         Based on the type of authentication your application uses, specify how the authentication parameter 
         will be generated when this function is called with a user object.
-    - `loginRandom()`
+        
+    - **loginRandom()**
     
         Similar to `login()` but in this case the generated authentication parameter relies on a randomly 
         generated or selected user.
         
-    - `logout()`
+    - **logout()**
     
         This simply specifies how the authentication parameter is reset/removed. The default logic should 
         suffice.
         
-    - `preRequest()`
+    - **preRequest()**
     
         This function is triggered every time before the wrapper makes a request. The default logic adds 
         the authentication parameter to the request object if it exists i.e. if `login()` or `loginRandom()` 
@@ -59,7 +60,8 @@ other desired behaviors like authentication.
         authentication. More pre-request logic can be added but it is crucial that the default logic is retained or 
         modified in such a way that it retains its primary purpose.
         
-    - `HTTP methods`
+    - **HTTP methods**
+    
         When making HTTP assertions these methods are the methods that should be triggered. Under the hood, they 
         call the respective HTTP methods on the SuperAgent instance. This allows for pre-request logic (defined in 
         preRequest()) to be triggered to add any desired behaviors. The most common HTTP methods are available out 
