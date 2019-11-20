@@ -1,5 +1,5 @@
 {
-  "name": "supertest-wrapper",
+  "name": "app-wrapper",
   "version": "0.1.0",
   "description": "An elegant and scalable solution for testing with supertest",
   "main": "index.js",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mutaimwiti/supertest-wrapper.git"
+    "url": "git+https://github.com/mutaimwiti/app-wrapper.git"
   },
   "keywords": [
     "cli",
@@ -24,16 +24,16 @@
     "wrapper",
     "supertest",
     "auth-wrapper",
-    "supertest-wrapper"
+    "app-wrapper"
   ],
   "author": "Mutai Mwiti",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mutaimwiti/supertest-wrapper/issues"
+    "url": "https://github.com/mutaimwiti/app-wrapper/issues"
   },
-  "homepage": "https://gitlab.com/mutaimwiti/supertest-wrapper#readme",
+  "homepage": "https://gitlab.com/mutaimwiti/app-wrapper#readme",
   "bin": {
-    "supertest-wrapper": "./index.js"
+    "app-wrapper": "./index.js"
   },
   "dependencies": {
     "chalk": "^2.4.2",

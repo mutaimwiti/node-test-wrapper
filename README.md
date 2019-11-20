@@ -1,2 +1,2 @@
-# supertest-wrapper
-An elegant and scalable solution for testing with supertest
+# app-wrapper
+An elegant and scalable solution for HTTP testing in Node/Express
