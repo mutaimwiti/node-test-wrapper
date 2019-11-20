@@ -77,7 +77,157 @@ other desired behaviors like authentication.
     
 ### Examples
 
-#### ES5
+#### Wrappers
+
+##### ES5
+```javascript
+// test/utils/app.js
+
+const supertest = require('supertest');
+const appDef = require('../../src/app');
+const utils = require('../../src/utils');
+const mock = require('../../src/__mock__');
+
+const mockUsers = mock.mockUsers;
+const generateAuthToken = utils.generateAuthToken;
+
+const app = {
+  client: supertest(appDef),
+
+  token: null,
+
+  login(user, done) {
+    generateAuthToken(user, function(err, token) {
+      app.token = token;
+      return err ? done(err) : done(null);
+    });
+  },
+
+  loginRandom(done) {
+    const user = mockUsers[Math.floor(Math.random() * mockUsers.length)];
+
+    generateAuthToken(user, function(err, token) {
+      app.token = token;
+      return err ? done(err) : done(null, user);
+    });
+  },
+
+  logout() {
+    this.token = null;
+  },
+
+  preRequest(request) {
+    return this.token ? request.set('authorization', this.token) : request;
+  },
+
+  get(url) {
+    const req = this.client.get(url);
+
+    return this.preRequest(req);
+  },
+
+  post(url) {
+    const req = this.client.post(url);
+
+    return this.preRequest(req);
+  },
+
+  put(url) {
+    const req = this.client.put(url);
+
+    return this.preRequest(req);
+  },
+
+  patch(url) {
+    const req = this.client.patch(url);
+
+    return this.preRequest(req);
+  },
+
+  delete(url) {
+    const req = this.client.delete(url);
+
+    return this.preRequest(req);
+  },
+};
+
+module.exports = app;
+```
+
+##### ES6
+```javascript
+// test/utils/app.js
+
+import supertest from 'supertest';
+import appDef from '../../src/app';
+
+const { generateAuthToken } = require('../../src/utils');
+const { mockUsers } = require('../../src/__mock__');
+
+class App {
+  constructor() {
+    this.client = supertest(appDef);
+    this.token = null;
+  }
+
+ 
+  async login(user) {
+    this.token = await generateAuthToken(user);
+  }
+
+  async loginRandom() {
+    const user = mockUsers[Math.floor(Math.random() * mockUsers.length)];
+
+    this.token = await generateAuthToken(user);
+  }
+
+ 
+  logout() {
+    this.token = null;
+  }
+
+ 
+  preRequest(request) {
+    return this.token ? request.set('authorization', this.token) : request;
+  }
+
+  get(url) {
+    const req = this.client.get(url);
+
+    return this.preRequest(req);
+  }
+
+  post(url) {
+    const req = this.client.post(url);
+
+    return this.preRequest(req);
+  }
+
+  put(url) {
+    const req = this.client.put(url);
+
+    return this.preRequest(req);
+  }
+
+  patch(url) {
+    const req = this.client.patch(url);
+
+    return this.preRequest(req);
+  }
+
+  delete(url) {
+    const req = this.client.delete(url);
+
+    return this.preRequest(req);
+  }
+}
+
+export default new App();
+```
+
+#### Tests
+
+##### ES5
 ```javascript
 // tests/article.spec.js
 
@@ -102,7 +252,7 @@ describe('Articles', function() {
 });
 ```
 
-#### ES6
+##### ES6
 ```javascript
 // tests/article.spec.js
 
