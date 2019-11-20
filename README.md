@@ -1,7 +1,7 @@
 # App wrapper
 App wrapper is elegant and scalable solution for HTTP testing in Node/Express. It works by creating a single object 
-that encapsulates all the logic needed to make HTTP assertions on a Node app. This solves the problem of 
-other desired behaviors like authentication.
+that encapsulates all the logic needed to make HTTP assertions on a Node app. This solves the problem of other 
+desired behaviors like authentication.
 
 ### Quick start
 - Install app-wrapper npm package globally
@@ -56,7 +56,7 @@ other desired behaviors like authentication.
     
         This function is triggered every time before the wrapper makes a request. The default logic adds 
         the authentication parameter to the request object if it exists i.e. if `login()` or `loginRandom()` 
-        were previously called and `logout()` wasn't. For example, setting the authorization header in token-based 
+        were previously called and `logout()` was not. For example, setting the authorization header in token-based 
         authentication. More pre-request logic can be added but it is crucial that the default logic is retained or 
         modified in such a way that it retains its primary purpose.
         
@@ -76,6 +76,8 @@ other desired behaviors like authentication.
     is required.
     
 ### Examples
+> The examples below may not make everything crystal clear. Go through [examples](examples) for more elaborate full 
+> application illustrations. On all the examples `test/utils/app.js` is the app wrapper.
 
 #### Wrappers
 
