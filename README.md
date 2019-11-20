@@ -74,6 +74,57 @@ other desired behaviors like authentication.
     - Where authentication is required invoke `login()`, `loginRandom()` or `logout()` based on the desired behavior
     - Add any other desired behaviors as functions on the wrapper. Invoke the function as and when any behavior 
     is required.
+    
+### Examples
+
+#### ES5
+```javascript
+// tests/article.spec.js
+
+const app = require('./utils/app');
+
+describe('Articles', function() {
+  describe('GET', function() {
+    it('should not allow unauthenticated users to list all articles', function(done) {
+      app.get('/articles').expect(401, done);
+    });
+
+    it('should allow authenticated users to list all articles', function(done) {
+      app.loginRandom(function() {
+        app.get('/articles').then(function({ body }) {
+          expect(body.articles).toEqual('All articles');
+          app.logout();
+          done();
+        });
+      });
+    });
+  });
+});
+```
+
+#### ES6
+```javascript
+// tests/article.spec.js
+
+import app from './utils/app';
+
+describe('Articles', () => {
+  describe('GET', () => {
+    it('should not allow unauthenticated users to list all articles', async () => {
+      const res = await app.get('/articles');
+
+      expect(res.status).toBe(401);
+    });
+
+    it('should allow authenticated users to list all articles', async () => {
+      await app.loginRandom();
+      const { body } = await app.get('/articles');
+      expect(body.articles).toEqual('All articles');
+      app.logout();
+    });
+  });
+});
+```
 
 ### Licence
 
