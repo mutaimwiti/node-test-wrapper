@@ -71,7 +71,7 @@ class App {
 
   // http wrapper methods
   // get(), post(), put(), patch(), delete()
-  // you can add more methods offered by supertest
+  // you can add more methods offered by superagent
 
   get(url) {
     const req = this.client.get(url);

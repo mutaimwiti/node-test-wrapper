@@ -1,16 +1,13 @@
-const supertest = require('supertest');
-const appDef = require('../path/to/your/app');
+import supertest from 'supertest';
+import appDef from '../path/to/your/app';
 
-const app = {
-  /**
-   * @private
-   */
-  client: supertest(appDef),
-
-  /**
-   * @private
-   */
-  credentials: null,
+class App {
+  constructor() {
+    /** @private */
+    this.client = supertest(appDef);
+    /** @private */
+    this.credentials = null;
+  }
 
   /**
    * When this method is called it generates authentication credentials based on
@@ -20,17 +17,16 @@ const app = {
    * required permission(s).
    *
    * @param user
+   * @returns {Promise<void>}
    */
-  login(user) {
-    // add logic to generate user authentication credentials here ...
+  async login(user) {
+    // add logic to generate user authentication details here ...
     // replace the username and password with the actual values
-    // your persistence system is most likely asynchronous - use a
-    // callback or return a promise to handle this
     this.credentials = {
       username: 'username',
       password: 'password',
     };
-  },
+  }
 
   /**
    * When this method is called it generates authentication credentials for a
@@ -38,19 +34,19 @@ const app = {
    * having an optional argument to specify the role or permissions of the
    * user. This will allow you to assign the random user the required
    * permission(s).
+   *
+   * @returns {Promise<void>}
    */
-  loginRandom() {
+  async loginRandom() {
     // create a random user - entirely up to your persistence system
     // alternatively randomly select an existing user
     // add logic to generate user authentication credentials here ..
     // replace the username and password with the actual values
-    // your persistence system is most likely asynchronous - use a
-    // callback or return a promise to handle this
     this.credentials = {
       username: 'username',
       password: 'password',
     };
-  },
+  }
 
   /**
    * When this method is called it clears authentication credentials on the wrapper.
@@ -60,7 +56,7 @@ const app = {
   logout() {
     // remove authentication credentials
     this.credentials = null;
-  },
+  }
 
   /**
    * This method contains pre-request logic. It is executed by all http
@@ -77,41 +73,41 @@ const app = {
     return this.credentials
       ? request.auth(this.credentials.username, this.credentials.password)
       : request;
-  },
+  }
 
   // http wrapper methods
   // get(), post(), put(), patch(), delete()
-  // you can add more methods offered by supertest
+  // you can add more methods offered by superagent
 
   get(url) {
     const req = this.client.get(url);
 
     return this.preRequest(req);
-  },
+  }
 
   post(url) {
     const req = this.client.post(url);
 
     return this.preRequest(req);
-  },
+  }
 
   put(url) {
     const req = this.client.put(url);
 
     return this.preRequest(req);
-  },
+  }
 
   patch(url) {
     const req = this.client.patch(url);
 
     return this.preRequest(req);
-  },
+  }
 
   delete(url) {
     const req = this.client.delete(url);
 
     return this.preRequest(req);
-  },
-};
+  }
+}
 
-module.exports = app;
+export default new App();

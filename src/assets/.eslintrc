@@ -6,12 +6,6 @@
         "ignore": ["supertest", "../path/to/your/app"]
       }
     ],
-    "class-methods-use-this": [
-      "error",
-      {
-        "exceptMethods": ["preRequest"]
-      }
-    ],
     "no-unused-vars": [
       "error",
       {

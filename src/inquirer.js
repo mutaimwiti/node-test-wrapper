@@ -13,7 +13,7 @@ const questions = [
     name: 'authOpt',
     type: 'list',
     message: 'Which type of authentication does your app use?',
-    choices: ['no-auth', 'basic-auth', 'token-auth', 'session-auth'],
+    choices: ['none', 'basic', 'token', 'session'],
   },
   {
     name: 'filePath',

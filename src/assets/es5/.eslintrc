@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "import/no-extraneous-dependencies": "off",
+    "object-shorthand": "off",
+    "func-names": "off",
+    "no-var": "off"
+  }
+}

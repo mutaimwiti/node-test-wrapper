@@ -1,13 +1,16 @@
-import supertest from 'supertest';
-import appDef from '../path/to/your/app';
+var supertest = require('supertest');
+var appDef = require('../path/to/your/app');
 
-class App {
-  constructor() {
-    /** @private */
-    this.client = supertest(appDef);
-    /** @private */
-    this.token = null;
-  }
+var app = {
+  /**
+   * @private
+   */
+  client: supertest(appDef),
+
+  /**
+   * @private
+   */
+  token: null,
 
   /**
    * When this method is called it generates an auth token based on the details of
@@ -17,13 +20,14 @@ class App {
    * permission(s).
    *
    * @param user
-   * @returns {Promise<void>}
    */
-  async login(user) {
-    // add logic to generate user authentication details here ...
+  login: function(user) {
+    // add logic to generate user authentication token here ...
     // replace this with the actual implementation
-    this.token = 'generated-auth-token';
-  }
+    // your persistence system is most likely asynchronous - use a
+    // callback or return a promise to handle this
+    app.token = 'generated-auth-token';
+  },
 
   /**
    * When this method is called it generates an auth token based on the details of
@@ -31,76 +35,76 @@ class App {
    * having an optional argument to specify the role or permissions of the
    * user. This will allow you to assign the random user the required
    * permission(s).
-   *
-   * @returns {Promise<void>}
    */
-  async loginRandom() {
+  loginRandom: function() {
     // create a random user - entirely up to your persistence system
     // alternatively randomly select an existing user
     // add logic to generate user authentication token here ...
     // replace this with the actual implementation
-    this.token = 'generated-auth-token';
-  }
+    // your persistence system is most likely asynchronous - use a
+    // callback or return a promise to handle this
+    app.token = 'generated-auth-token';
+  },
 
   /**
    * When this method is called it clears authentication data on the wrapper.
    * This means that calls to http wrapper methods generate request objects
    * that don't have the authentication header.
    */
-  logout() {
+  logout: function() {
     // remove authentication token
-    this.token = null;
-  }
+    app.token = null;
+  },
 
   /**
    * This method contains pre-request logic. It is executed by all http
-   * wrapper methods i.e. get, post, ... , to alter the request object.
-   * It's main use is to set the authentication header.
+   * wrapper methods i.e. get, post, ... , to alter the request
+   * object. It's main use is to set the authentication header.
    *
    * @param request
    * @returns {*}
    * @private
    */
-  preRequest(request) {
+  preRequest: function(request) {
     // add pre-request logic
     // set the authentication header
     // set whatever header your system uses for authentication
-    return this.token ? request.set('authorization', this.token) : request;
-  }
+    return app.token ? request.set('authorization', app.token) : request;
+  },
 
   // http wrapper methods
   // get(), post(), put(), patch(), delete()
-  // you can add more methods offered by supertest
+  // you can add more methods offered by superagent
 
-  get(url) {
-    const req = this.client.get(url);
+  get: function(url) {
+    var req = app.client.get(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
+  },
+
+  post: function(url) {
+    var req = app.client.post(url);
+
+    return app.preRequest(req);
+  },
+
+  put: function(url) {
+    var req = app.client.put(url);
+
+    return app.preRequest(req);
+  },
+
+  patch: function(url) {
+    var req = app.client.patch(url);
+
+    return app.preRequest(req);
+  },
+
+  delete: function(url) {
+    var req = app.client.delete(url);
+
+    return app.preRequest(req);
   }
+};
 
-  post(url) {
-    const req = this.client.post(url);
-
-    return this.preRequest(req);
-  }
-
-  put(url) {
-    const req = this.client.put(url);
-
-    return this.preRequest(req);
-  }
-
-  patch(url) {
-    const req = this.client.patch(url);
-
-    return this.preRequest(req);
-  }
-
-  delete(url) {
-    const req = this.client.delete(url);
-
-    return this.preRequest(req);
-  }
-}
-
-export default new App();
+module.exports = app;

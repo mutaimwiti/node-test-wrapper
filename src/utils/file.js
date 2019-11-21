@@ -73,9 +73,9 @@ const sanitizeTemplateDestination = (destination) => {
  * @param options
  */
 const copyTemplate = (options) => {
-  const { authOpt, esVersion, filePath } = options;
+  const { esVersion, authOpt, filePath } = options;
 
-  const source = `${__dirname}/../assets/${authOpt}/${esVersion}.js`;
+  const source = `${__dirname}/../assets/${esVersion}/${authOpt}.js`;
 
   const destination = jsExtensionPath(filePath);
 
