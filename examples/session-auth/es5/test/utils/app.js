@@ -96,7 +96,7 @@ var app = {
 
   // http wrapper methods
   // get(), post(), put(), patch(), delete()
-  // you can add more methods offered by supertest
+  // you can add more methods offered by superagent
 
   get: function(url) {
     var req = app.client.get(url);
