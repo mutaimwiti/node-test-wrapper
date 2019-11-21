@@ -95,17 +95,17 @@ var users = User.all();
 
 var app = {
   client: supertest(appDef),
-
+  
   token: null,
-
-  login(user, done) {
+  
+  login: function(user, done) {
     generateAuthToken(user, function(err, token) {
       app.token = token;
       return err ? done(err) : done(null);
     });
   },
 
-  loginRandom(done) {
+  loginRandom: function(done) {
     var user = users[Math.floor(Math.random() * users.length)];
 
     generateAuthToken(user, function(err, token) {
@@ -114,42 +114,42 @@ var app = {
     });
   },
 
-  logout() {
-    this.token = null;
+  logout: function() {
+    app.token = null;
   },
 
-  preRequest(request) {
-    return this.token ? request.set('authorization', this.token) : request;
+  preRequest: function(request) {
+    return app.token ? request.set('authorization', app.token) : request;
   },
 
-  get(url) {
-    var req = this.client.get(url);
+  get: function(url) {
+    var req = app.client.get(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   },
 
-  post(url) {
-    var req = this.client.post(url);
+  post: function(url) {
+    var req = app.client.post(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   },
 
-  put(url) {
-    var req = this.client.put(url);
+  put: function(url) {
+    var req = app.client.put(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   },
 
-  patch(url) {
-    var req = this.client.patch(url);
+  patch: function(url) {
+    var req = app.client.patch(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   },
 
-  delete(url) {
-    var req = this.client.delete(url);
+  delete: function(url) {
+    var req = app.client.delete(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   }
 };
 
@@ -174,7 +174,6 @@ class App {
     this.token = null;
   }
 
- 
   async login(user) {
     this.token = await generateAuthToken(user);
   }
@@ -187,12 +186,10 @@ class App {
     return user;
   }
 
- 
   logout() {
     this.token = null;
   }
 
- 
   preRequest(request) {
     return this.token ? request.set('authorization', this.token) : request;
   }
