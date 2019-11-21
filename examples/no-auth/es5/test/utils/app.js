@@ -1,7 +1,7 @@
-const supertest = require('supertest');
-const appDef = require('../../src/app');
+var supertest = require('supertest');
+var appDef = require('../../src/app');
 
-const app = {
+var app = {
   /**
    * @private
    */
@@ -17,7 +17,7 @@ const app = {
    * @returns {*}
    * @private
    */
-  preRequest(request) {
+  preRequest: function(request) {
     // add pre-request logic - alter request object
     return request;
   },
@@ -26,35 +26,35 @@ const app = {
   // get(), post(), put(), patch(), delete()
   // you can add more methods offered by supertest
 
-  get(url) {
-    const req = this.client.get(url);
+  get: function(url) {
+    var req = app.client.get(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   },
 
-  post(url) {
-    const req = this.client.post(url);
+  post: function(url) {
+    var req = app.client.post(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   },
 
-  put(url) {
-    const req = this.client.put(url);
+  put: function(url) {
+    var req = app.client.put(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   },
 
-  patch(url) {
-    const req = this.client.patch(url);
+  patch: function(url) {
+    var req = app.client.patch(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   },
 
-  delete(url) {
-    const req = this.client.delete(url);
+  delete: function(url) {
+    var req = app.client.delete(url);
 
-    return this.preRequest(req);
-  },
+    return app.preRequest(req);
+  }
 };
 
 module.exports = app;

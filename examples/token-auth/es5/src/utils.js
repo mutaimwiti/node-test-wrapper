@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken');
-const mock = require('./__mock__');
+var jwt = require('jsonwebtoken');
+var mock = require('./__mock__');
 
-const mockUsers = mock.mockUsers;
+var mockUsers = mock.mockUsers;
 
-const SECRET = 'secret';
+var SECRET = 'secret';
 
 function findUser(data) {
   if (!data) return null;
@@ -18,7 +18,7 @@ function generateAuthToken(data, done) {
 }
 
 function decodeAuthToken(req, done) {
-  const token = req.headers.authorization || '';
+  var token = req.headers.authorization || '';
 
   if (!token) {
     return done(true);
@@ -29,13 +29,11 @@ function decodeAuthToken(req, done) {
 
 function renderUnAuthorized(res) {
   return res.status(401).json({
-    message: 'Unauthorized',
+    message: 'Unauthorized'
   });
 }
 
-module.exports = {
-  findUser,
-  decodeAuthToken,
-  generateAuthToken,
-  renderUnAuthorized,
-};
+module.exports.findUser = findUser;
+module.exports.decodeAuthToken = decodeAuthToken;
+module.exports.generateAuthToken = generateAuthToken;
+module.exports.renderUnAuthorized = renderUnAuthorized;

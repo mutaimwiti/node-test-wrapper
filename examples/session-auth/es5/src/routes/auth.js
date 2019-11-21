@@ -1,13 +1,13 @@
-const Router = require('express').Router;
-const utils = require('../utils');
+var Router = require('express').Router;
+var utils = require('../utils');
 
-const findUser = utils.findUser;
+var findUser = utils.findUser;
 
-const router = Router();
+var router = Router();
 
 router.post('/login', function(req, res) {
   if (!req.session.user) {
-    const data = req.body;
+    var data = req.body;
 
     if (findUser(data)) {
       req.session.user = data;

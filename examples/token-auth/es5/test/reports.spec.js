@@ -1,4 +1,4 @@
-const app = require('./utils/app');
+var app = require('./utils/app');
 
 describe('Reports', function() {
   describe('GET', function() {

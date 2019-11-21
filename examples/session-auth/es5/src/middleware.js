@@ -1,6 +1,6 @@
-const utils = require('./utils');
+var utils = require('./utils');
 
-const findUser = utils.findUser;
+var findUser = utils.findUser;
 
 function checkAuth(req, res, next) {
   if (
@@ -11,7 +11,7 @@ function checkAuth(req, res, next) {
     return next();
   }
 
-  const reqUser = req.session.user;
+  var reqUser = req.session.user;
 
   if (reqUser) {
     if (findUser(reqUser)) {
@@ -20,10 +20,8 @@ function checkAuth(req, res, next) {
   }
 
   return res.status(401).json({
-    message: 'Unauthorized',
+    message: 'Unauthorized'
   });
 }
 
-module.exports = {
-  checkAuth,
-};
+module.exports.checkAuth = checkAuth;

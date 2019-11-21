@@ -1,11 +1,11 @@
-const express = require('express');
+var express = require('express');
 
-const routes = require('./routes');
-const middleware = require('./middleware');
+var routes = require('./routes');
+var middleware = require('./middleware');
 
-const checkAuth = middleware.checkAuth;
+var checkAuth = middleware.checkAuth;
 
-const app = express();
+var app = express();
 
 app.use(express.json());
 

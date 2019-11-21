@@ -1,4 +1,4 @@
-const app = require('./utils/app');
+var app = require('./utils/app');
 
 describe('Reports', function() {
   describe('GET', function() {
@@ -8,8 +8,8 @@ describe('Reports', function() {
 
     it('should allow authenticated users to list all reports', function(done) {
       app.loginRandom(function() {
-        app.get('/reports').then(function({ body }) {
-          expect(body.reports).toEqual('All reports');
+        app.get('/reports').then(function(res) {
+          expect(res.body.reports).toEqual('All reports');
           app.logout();
           done();
         });
@@ -24,8 +24,8 @@ describe('Reports', function() {
 
     it('should allow authenticated users to get one report', function(done) {
       app.loginRandom(function() {
-        app.get('/reports/6').then(function({ body }) {
-          expect(body.report).toEqual('Report 6');
+        app.get('/reports/6').then(function(res) {
+          expect(res.body.report).toEqual('Report 6');
           app.logout();
           done();
         });
@@ -43,8 +43,8 @@ describe('Reports', function() {
         app
           .post('/reports')
           .send({ title: 'foo' })
-          .then(function({ body }) {
-            expect(body.message).toEqual('Created report foo');
+          .then(function(res) {
+            expect(res.body.message).toEqual('Created report foo');
             app.logout();
             done();
           });
@@ -59,8 +59,8 @@ describe('Reports', function() {
 
     it('should allow authenticated users to update an report', function(done) {
       app.loginRandom(function() {
-        app.put('/reports/14').then(function({ body }) {
-          expect(body.message).toEqual('Updated report 14');
+        app.put('/reports/14').then(function(res) {
+          expect(res.body.message).toEqual('Updated report 14');
           app.logout();
           done();
         });
@@ -75,8 +75,8 @@ describe('Reports', function() {
 
     it('should allow authenticated users to delete an report', function(done) {
       app.loginRandom(function() {
-        app.delete('/reports/2').then(function({ body }) {
-          expect(body.message).toEqual('Deleted report 2');
+        app.delete('/reports/2').then(function(res) {
+          expect(res.body.message).toEqual('Deleted report 2');
           app.logout();
           done();
         });

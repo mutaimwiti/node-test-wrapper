@@ -1,6 +1,6 @@
-const mock = require('./__mock__');
+var mock = require('./__mock__');
 
-const mockUsers = mock.mockUsers;
+var mockUsers = mock.mockUsers;
 
 function findUser(data) {
   return mockUsers.find(function(user) {
@@ -8,6 +8,4 @@ function findUser(data) {
   });
 }
 
-module.exports = {
-  findUser,
-};
+module.exports.findUser = findUser;

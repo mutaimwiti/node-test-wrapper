@@ -4,7 +4,11 @@
   },
   "rules": {
     "prefer-destructuring": "off",
+    "object-shorthand": "off",
+    "prefer-template": "off",
+    "vars-on-top": "off",
     "func-names": "off",
-    "no-console": "off"
+    "no-console": "off",
+    "no-var": "off"
   }
 }

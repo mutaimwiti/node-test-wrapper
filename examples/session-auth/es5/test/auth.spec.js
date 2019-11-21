@@ -1,11 +1,11 @@
-const app = require('./utils/app');
+var app = require('./utils/app');
 
 describe('Auth', function() {
   describe('POST /auth/login', function() {
     it('should successfully login registered users', function(done) {
-      const user = {
+      var user = {
         username: 'admin',
-        password: 'admin_pass',
+        password: 'admin_pass'
       };
 
       app
@@ -15,9 +15,9 @@ describe('Auth', function() {
     });
 
     it('should not login unregistered users', function(done) {
-      const user = {
+      var user = {
         username: 'foo',
-        password: 'foo_pass',
+        password: 'foo_pass'
       };
 
       app
@@ -27,9 +27,9 @@ describe('Auth', function() {
     });
 
     it('should not log in users with incorrect password', function(done) {
-      const user = {
+      var user = {
         username: 'admin',
-        password: 'foo_pass',
+        password: 'foo_pass'
       };
 
       app
@@ -39,9 +39,9 @@ describe('Auth', function() {
     });
 
     it('should maintain the session if it has not expired', function(done) {
-      const user = {
+      var user = {
         username: 'admin',
-        password: 'admin_pass',
+        password: 'admin_pass'
       };
       // login to get session cookie
       app
@@ -64,9 +64,9 @@ describe('Auth', function() {
 
   describe('POST auth/logout', function() {
     it('should destroy session', function(done) {
-      const user = {
+      var user = {
         username: 'admin',
-        password: 'admin_pass',
+        password: 'admin_pass'
       };
       // login to get session cookie
       app

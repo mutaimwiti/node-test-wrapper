@@ -1,10 +1,10 @@
-const supertest = require('supertest');
-const appDef = require('../../src/app');
-const mock = require('../../src/__mock__');
+var supertest = require('supertest');
+var appDef = require('../../src/app');
+var mock = require('../../src/__mock__');
 
-const mockUsers = mock.mockUsers;
+var mockUsers = mock.mockUsers;
 
-const app = {
+var app = {
   /**
    * @private
    */
@@ -26,17 +26,17 @@ const app = {
    * @param user
    * @param done
    */
-  login(user, done) {
+  login: function(user, done) {
     // add logic to generate auth cookie here - ideally this will involve invoking
     // the login endpoint and extracting "set-cookie" from the response headers
     // replace this with the actual implementation
     // your persistence system is most likely asynchronous - use a
     // callback or return a promise to handle this
-    this.client
+    app.client
       .post('/auth/login')
       .send(user)
-      .end((err, res) => {
-        this.cookie = res.headers['set-cookie'];
+      .end(function(err, res) {
+        app.cookie = res.headers['set-cookie'];
         return err ? done(err) : done(false, user);
       });
   },
@@ -49,7 +49,7 @@ const app = {
    * permissions of the user. This will allow you to assign the random
    * user the required permission(s).
    */
-  loginRandom(done) {
+  loginRandom: function(done) {
     // create a random user - entirely up to your persistence system
     // add logic to generate auth cookie here - ideally this will involve invoking
     // the login endpoint and extracting "set-cookie" from the response headers
@@ -58,13 +58,13 @@ const app = {
     // callback or return a promise to handle this
 
     // in this example we randomly select one of our mocked users
-    const user = mockUsers[Math.floor(Math.random() * mockUsers.length)];
+    var user = mockUsers[Math.floor(Math.random() * mockUsers.length)];
 
-    this.client
+    app.client
       .post('/auth/login')
       .send(user)
-      .end((err, res) => {
-        this.cookie = res.headers['set-cookie'];
+      .end(function(err, res) {
+        app.cookie = res.headers['set-cookie'];
         return err ? done(err) : done(false, user);
       });
   },
@@ -74,9 +74,9 @@ const app = {
    * This means that calls to http wrapper methods generate request objects
    * that don't have the authentication header.
    */
-  logout() {
+  logout: function() {
     // remove authentication cookie
-    this.cookie = null;
+    app.cookie = null;
   },
 
   /**
@@ -88,45 +88,45 @@ const app = {
    * @returns {*}
    * @private
    */
-  preRequest(request) {
+  preRequest: function(request) {
     // add pre-request logic
     // set the authorization header
-    return this.cookie ? request.set('cookie', this.cookie) : request;
+    return app.cookie ? request.set('cookie', app.cookie) : request;
   },
 
   // http wrapper methods
   // get(), post(), put(), patch(), delete()
   // you can add more methods offered by supertest
 
-  get(url) {
-    const req = this.client.get(url);
+  get: function(url) {
+    var req = app.client.get(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   },
 
-  post(url) {
-    const req = this.client.post(url);
+  post: function(url) {
+    var req = app.client.post(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   },
 
-  put(url) {
-    const req = this.client.put(url);
+  put: function(url) {
+    var req = app.client.put(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   },
 
-  patch(url) {
-    const req = this.client.patch(url);
+  patch: function(url) {
+    var req = app.client.patch(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   },
 
-  delete(url) {
-    const req = this.client.delete(url);
+  delete: function(url) {
+    var req = app.client.delete(url);
 
-    return this.preRequest(req);
-  },
+    return app.preRequest(req);
+  }
 };
 
 module.exports = app;

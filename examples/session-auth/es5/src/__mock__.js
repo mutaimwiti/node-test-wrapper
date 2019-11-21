@@ -1,14 +1,12 @@
-const mockUsers = [
+var mockUsers = [
   {
     username: 'admin',
-    password: 'admin_pass',
+    password: 'admin_pass'
   },
   {
     username: 'joe',
-    password: 'joe_pass',
-  },
+    password: 'joe_pass'
+  }
 ];
 
-module.exports = {
-  mockUsers,
-};
+module.exports.mockUsers = mockUsers;

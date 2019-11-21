@@ -1,10 +1,10 @@
-const Router = require('express').Router;
+var Router = require('express').Router;
 
-const auth = require('./auth');
-const reports = require('./reports');
-const articles = require('./articles');
+var auth = require('./auth');
+var reports = require('./reports');
+var articles = require('./articles');
 
-const router = Router();
+var router = Router();
 
 router.use('/auth', auth);
 router.use('/reports', reports);

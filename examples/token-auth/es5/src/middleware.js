@@ -1,8 +1,8 @@
-const utils = require('./utils');
+var utils = require('./utils');
 
-const findUser = utils.findUser;
-const decodeAuthToken = utils.decodeAuthToken;
-const renderUnAuthorized = utils.renderUnAuthorized;
+var findUser = utils.findUser;
+var decodeAuthToken = utils.decodeAuthToken;
+var renderUnAuthorized = utils.renderUnAuthorized;
 
 function checkAuth(req, res, next) {
   if (req.path === '/' || req.path === '/auth/login') {
@@ -14,6 +14,4 @@ function checkAuth(req, res, next) {
   });
 }
 
-module.exports = {
-  checkAuth,
-};
+module.exports.checkAuth = checkAuth;

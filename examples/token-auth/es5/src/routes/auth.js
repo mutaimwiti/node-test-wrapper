@@ -1,21 +1,23 @@
-const Router = require('express').Router;
-const utils = require('../utils');
+var Router = require('express').Router;
+var utils = require('../utils');
 
-const findUser = utils.findUser;
-const generateAuthToken = utils.generateAuthToken;
-const renderUnAuthorized = utils.renderUnAuthorized;
+var findUser = utils.findUser;
+var generateAuthToken = utils.generateAuthToken;
+var renderUnAuthorized = utils.renderUnAuthorized;
 
-const router = Router();
+var router = Router();
 
 router.post('/login', function(req, res) {
-  const data = req.body;
+  var data = req.body;
 
   if (findUser(data)) {
     return generateAuthToken(data, function(err, token) {
       if (err) {
         return renderUnAuthorized(res);
       }
-      return res.status(201).json({ message: 'Logged in successfully', token });
+      return res
+        .status(201)
+        .json({ message: 'Logged in successfully', token: token });
     });
   }
 

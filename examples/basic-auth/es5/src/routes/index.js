@@ -1,9 +1,9 @@
-const Router = require('express').Router;
+var Router = require('express').Router;
 
-const reports = require('./reports');
-const articles = require('./articles');
+var reports = require('./reports');
+var articles = require('./articles');
 
-const router = Router();
+var router = Router();
 
 router.use('/reports', reports);
 router.use('/articles', articles);

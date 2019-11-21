@@ -1,4 +1,4 @@
-const app = require('./utils/app');
+var app = require('./utils/app');
 
 describe('Articles', function() {
   describe('GET', function() {
@@ -9,8 +9,8 @@ describe('Articles', function() {
     it('should allow authenticated users to list all articles', function(done) {
       app.loginRandom();
 
-      app.get('/articles').then(function({ body }) {
-        expect(body.articles).toEqual('All articles');
+      app.get('/articles').then(function(res) {
+        expect(res.body.articles).toEqual('All articles');
         app.logout();
         done();
       });
@@ -25,8 +25,8 @@ describe('Articles', function() {
     it('should allow authenticated users to get one article', function(done) {
       app.loginRandom();
 
-      app.get('/articles/6').then(function({ body }) {
-        expect(body.article).toEqual('Article 6');
+      app.get('/articles/6').then(function(res) {
+        expect(res.body.article).toEqual('Article 6');
         app.logout();
         done();
       });
@@ -44,8 +44,8 @@ describe('Articles', function() {
       app
         .post('/articles')
         .send({ title: 'foo' })
-        .then(function({ body }) {
-          expect(body.message).toEqual('Created article foo');
+        .then(function(res) {
+          expect(res.body.message).toEqual('Created article foo');
           app.logout();
           done();
         });
@@ -60,8 +60,8 @@ describe('Articles', function() {
     it('should allow authenticated users to update an article', function(done) {
       app.loginRandom();
 
-      app.put('/articles/14').then(function({ body }) {
-        expect(body.message).toEqual('Updated article 14');
+      app.put('/articles/14').then(function(res) {
+        expect(res.body.message).toEqual('Updated article 14');
         app.logout();
         done();
       });
@@ -76,8 +76,8 @@ describe('Articles', function() {
     it('should allow authenticated users to delete an article', function(done) {
       app.loginRandom();
 
-      app.delete('/articles/2').then(function({ body }) {
-        expect(body.message).toEqual('Deleted article 2');
+      app.delete('/articles/2').then(function(res) {
+        expect(res.body.message).toEqual('Deleted article 2');
         app.logout();
         done();
       });

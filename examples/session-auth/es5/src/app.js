@@ -1,12 +1,12 @@
-const express = require('express');
-const session = require('express-session');
+var express = require('express');
+var session = require('express-session');
 
-const routes = require('./routes');
-const middleware = require('./middleware');
+var routes = require('./routes');
+var middleware = require('./middleware');
 
-const checkAuth = middleware.checkAuth;
+var checkAuth = middleware.checkAuth;
 
-const app = express();
+var app = express();
 
 app.use(express.json());
 
@@ -14,8 +14,8 @@ app.use(
   session({
     secret: 'secret',
     resave: false,
-    saveUninitialized: true,
-  }),
+    saveUninitialized: true
+  })
 );
 
 app.use(checkAuth);

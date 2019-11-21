@@ -1,4 +1,4 @@
-const app = require('./utils/app');
+var app = require('./utils/app');
 
 describe('App', function() {
   it('should show welcome message', function(done) {

@@ -1,19 +1,19 @@
-const auth = require('basic-auth');
-const utils = require('./utils');
+var auth = require('basic-auth');
+var utils = require('./utils');
 
-const findUser = utils.findUser;
+var findUser = utils.findUser;
 
 function checkAuth(req, res, next) {
   if (req.path === '/') {
     return next();
   }
 
-  const reqUser = auth(req);
+  var reqUser = auth(req);
 
   if (reqUser) {
-    const user = {
+    var user = {
       username: reqUser.name,
-      password: reqUser.pass,
+      password: reqUser.pass
     };
 
     if (findUser(user)) {
@@ -22,10 +22,8 @@ function checkAuth(req, res, next) {
   }
 
   return res.status(401).json({
-    message: 'Unauthorized',
+    message: 'Unauthorized'
   });
 }
 
-module.exports = {
-  checkAuth,
-};
+module.exports.checkAuth = checkAuth;

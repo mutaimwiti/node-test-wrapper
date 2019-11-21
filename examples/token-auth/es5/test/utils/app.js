@@ -1,12 +1,12 @@
-const supertest = require('supertest');
-const appDef = require('../../src/app');
-const utils = require('../../src/utils');
-const mock = require('../../src/__mock__');
+var supertest = require('supertest');
+var appDef = require('../../src/app');
+var utils = require('../../src/utils');
+var mock = require('../../src/__mock__');
 
-const mockUsers = mock.mockUsers;
-const generateAuthToken = utils.generateAuthToken;
+var mockUsers = mock.mockUsers;
+var generateAuthToken = utils.generateAuthToken;
 
-const app = {
+var app = {
   /**
    * @private
    */
@@ -27,7 +27,7 @@ const app = {
    * @param user
    * @param done
    */
-  login(user, done) {
+  login: function(user, done) {
     // add logic to generate user authentication token here ...
     // replace this with the actual implementation
     // your persistence system is most likely asynchronous - use a
@@ -46,7 +46,7 @@ const app = {
    * user. This will allow you to assign the random user the required
    * permission(s).
    */
-  loginRandom(done) {
+  loginRandom: function(done) {
     // create a random user - entirely up to your persistence system
     // add logic to generate user authentication token here ...
     // replace this with the actual implementation
@@ -54,7 +54,7 @@ const app = {
     // callback or return a promise to handle this
 
     // in this example we randomly select one of our mocked users
-    const user = mockUsers[Math.floor(Math.random() * mockUsers.length)];
+    var user = mockUsers[Math.floor(Math.random() * mockUsers.length)];
 
     generateAuthToken(user, function(err, token) {
       app.token = token;
@@ -67,9 +67,9 @@ const app = {
    * This means that calls to http wrapper methods generate request objects
    * that don't have the authentication header.
    */
-  logout() {
+  logout: function() {
     // remove authentication token
-    this.token = null;
+    app.token = null;
   },
 
   /**
@@ -81,46 +81,46 @@ const app = {
    * @returns {*}
    * @private
    */
-  preRequest(request) {
+  preRequest: function(request) {
     // add pre-request logic
     // set the authentication header
     // set whatever header your system uses for authentication
-    return this.token ? request.set('authorization', this.token) : request;
+    return app.token ? request.set('authorization', app.token) : request;
   },
 
   // http wrapper methods
   // get(), post(), put(), patch(), delete()
   // you can add more methods offered by supertest
 
-  get(url) {
-    const req = this.client.get(url);
+  get: function(url) {
+    var req = app.client.get(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   },
 
-  post(url) {
-    const req = this.client.post(url);
+  post: function(url) {
+    var req = app.client.post(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   },
 
-  put(url) {
-    const req = this.client.put(url);
+  put: function(url) {
+    var req = app.client.put(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   },
 
-  patch(url) {
-    const req = this.client.patch(url);
+  patch: function(url) {
+    var req = app.client.patch(url);
 
-    return this.preRequest(req);
+    return app.preRequest(req);
   },
 
-  delete(url) {
-    const req = this.client.delete(url);
+  delete: function(url) {
+    var req = app.client.delete(url);
 
-    return this.preRequest(req);
-  },
+    return app.preRequest(req);
+  }
 };
 
 module.exports = app;
