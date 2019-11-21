@@ -28,7 +28,7 @@ desired behaviors like authentication.
 
     ![Alt text](assets/specify-wrapper-path.png?raw=true)
 
-- The wrapper is generated and placed on the path you chose
+    The wrapper is generated and placed on the path you chose
 
     ![Alt text](assets/wrapper-generated.png?raw=true)
 
@@ -82,18 +82,18 @@ desired behaviors like authentication.
 #### Wrappers
 
 ##### ES5
-```javascript
+```javascript 1.5
 // test/utils/app.js
 
-const supertest = require('supertest');
-const appDef = require('../../src/app');
-const utils = require('../../src/utils');
-const mock = require('../../src/__mock__');
+var supertest = require('supertest');
+var appDef = require('../../src/app');
 
-const mockUsers = mock.mockUsers;
-const generateAuthToken = utils.generateAuthToken;
+var User = require('../../src/models').User;
+var generateAuthToken = require('../../src/utils').generateAuthToken;
 
-const app = {
+var users = User.all();
+
+var app = {
   client: supertest(appDef),
 
   token: null,
@@ -106,7 +106,7 @@ const app = {
   },
 
   loginRandom(done) {
-    const user = mockUsers[Math.floor(Math.random() * mockUsers.length)];
+    var user = users[Math.floor(Math.random() * users.length)];
 
     generateAuthToken(user, function(err, token) {
       app.token = token;
@@ -123,34 +123,34 @@ const app = {
   },
 
   get(url) {
-    const req = this.client.get(url);
+    var req = this.client.get(url);
 
     return this.preRequest(req);
   },
 
   post(url) {
-    const req = this.client.post(url);
+    var req = this.client.post(url);
 
     return this.preRequest(req);
   },
 
   put(url) {
-    const req = this.client.put(url);
+    var req = this.client.put(url);
 
     return this.preRequest(req);
   },
 
   patch(url) {
-    const req = this.client.patch(url);
+    var req = this.client.patch(url);
 
     return this.preRequest(req);
   },
 
   delete(url) {
-    const req = this.client.delete(url);
+    var req = this.client.delete(url);
 
     return this.preRequest(req);
-  },
+  }
 };
 
 module.exports = app;
@@ -164,7 +164,9 @@ import supertest from 'supertest';
 import appDef from '../../src/app';
 
 const { generateAuthToken } = require('../../src/utils');
-const { mockUsers } = require('../../src/__mock__');
+const { User } = require('../../src/models');
+
+const users = User.all();
 
 class App {
   constructor() {
@@ -178,9 +180,11 @@ class App {
   }
 
   async loginRandom() {
-    const user = mockUsers[Math.floor(Math.random() * mockUsers.length)];
+    const user = users[Math.floor(Math.random() * users.length)];
 
     this.token = await generateAuthToken(user);
+    
+    return user;
   }
 
  
@@ -230,10 +234,10 @@ export default new App();
 #### Tests
 
 ##### ES5
-```javascript
+```javascript 1.5
 // tests/article.spec.js
 
-const app = require('./utils/app');
+var app = require('./utils/app');
 
 describe('Articles', function() {
   describe('GET', function() {
