@@ -40,6 +40,8 @@ class App {
     // add logic to generate user authentication token here ...
     // replace this with the actual implementation
     this.token = 'generated-auth-token';
+
+    return null; // return the logged in user here - optional
   }
 
   /**

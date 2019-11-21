@@ -42,6 +42,8 @@ class App {
     // the login endpoint and extracting "set-cookie" from the response headers
     // replace this with the actual implementation
     this.cookie = 'generated-cookie';
+
+    return null; // return the logged in user here - optional
   }
 
   /**

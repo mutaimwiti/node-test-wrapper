@@ -50,6 +50,8 @@ var app = {
       username: 'username',
       password: 'password'
     };
+
+    return null; // return the logged in user here - optional
   },
 
   /**
