@@ -91,8 +91,6 @@ var appDef = require('../../src/app');
 var User = require('../../src/models').User;
 var generateAuthToken = require('../../src/utils').generateAuthToken;
 
-var users = User.all();
-
 var app = {
   client: supertest(appDef),
   
@@ -106,7 +104,8 @@ var app = {
   },
 
   loginRandom: function(done) {
-    var user = users[Math.floor(Math.random() * users.length)];
+    // get a random user - random is just an arbitrary function to get one user
+    var user = User.random();
 
     generateAuthToken(user, function(err, token) {
       app.token = token;
@@ -166,8 +165,6 @@ import appDef from '../../src/app';
 const { generateAuthToken } = require('../../src/utils');
 const { User } = require('../../src/models');
 
-const users = User.all();
-
 class App {
   constructor() {
     this.client = supertest(appDef);
@@ -179,7 +176,8 @@ class App {
   }
 
   async loginRandom() {
-    const user = users[Math.floor(Math.random() * users.length)];
+    // get a random user - random is just an arbitrary function to get one user
+    const user = User.random();
 
     this.token = await generateAuthToken(user);
     
