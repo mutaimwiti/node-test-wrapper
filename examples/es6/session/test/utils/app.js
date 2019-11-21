@@ -51,6 +51,8 @@ class App {
     const res = await this.client.post('/auth/login').send(user);
 
     this.cookie = res.headers['set-cookie'];
+
+    return user;
   }
 
   /**

@@ -48,6 +48,8 @@ class App {
       username: user.username,
       password: user.password,
     };
+
+    return user;
   }
 
   /**

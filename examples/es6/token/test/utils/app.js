@@ -47,6 +47,8 @@ class App {
     const user = mockUsers[Math.floor(Math.random() * mockUsers.length)];
 
     this.token = await generateAuthToken(user);
+
+    return user;
   }
 
   /**
