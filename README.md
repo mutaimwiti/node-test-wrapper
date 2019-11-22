@@ -1,38 +1,42 @@
-# App test wrapper
+# Node test wrapper
 
-App test wrapper is elegant and scalable solution for HTTP testing in Node/Express. It works by creating a single
-object that encapsulates all the logic needed to make HTTP assertions on a Node app. This solves the problem of
-other desired behaviors like authentication.
+Node test wrapper is an elegant and scalable solution for HTTP testing in Node. It works by creating a single object
+that encapsulates all the logic needed to make HTTP assertions on a Node app. This solves the problem of other
+desired behaviors like authentication.
 
 ### Quick start
 
-- Install app-test-wrapper npm package globally
+- Install node-test-wrapper npm package globally
 
-        npm install app-test-wrapper -g
+        npm install node-test-wrapper -g
 
-  or
+    or
 
-        yarn global add app-test-wrapper
+        yarn global add node-test-wrapper
 
 - On your project folder run app wrapper CLI
 
-        app-test-wrapper
+        node-test-wrapper   
+        
+    or use shorthand
+    
+        test-wrapper
 
 - Select the javascript version of the wrapper to be generated
 
-  ![Alt text](assets/select-js-version.png?raw=true)
+  ![Image missing](assets/select-js-version.png?raw=true)
 
 - Select the type of authentication your application uses
 
-  ![Alt text](assets/select-auth-type.png?raw=true)
+  ![Image missing](assets/select-auth-type.png?raw=true)
 
 - Specify the path for the generated wrapper
 
-  ![Alt text](assets/specify-wrapper-path.png?raw=true)
+  ![Image missing](assets/specify-wrapper-path.png?raw=true)
 
   The wrapper is generated and placed on the path you chose
 
-  ![Alt text](assets/wrapper-generated.png?raw=true)
+  ![Image missing](assets/wrapper-generated.png?raw=true)
 
 - Customize the generated wrapper to suit the specifics of your application
 
@@ -41,8 +45,10 @@ other desired behaviors like authentication.
     Update the import with the actual path to your app. For example `../../src/app`.
 
   - **login()**
+
     Based on the type of authentication your application uses, specify how the authentication parameter
     will be generated when this function is called with a user object.
+
   - **loginRandom()**
 
     Similar to `login()` but in this case the generated authentication parameter relies on a randomly
