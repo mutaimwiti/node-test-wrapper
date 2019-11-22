@@ -11,7 +11,7 @@ const log = (color, message) => {
  * @param message
  */
 const logInfo = (message) => {
-  log('blue', message);
+  log('blueBright', message);
 };
 
 /**
