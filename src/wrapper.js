@@ -3,16 +3,16 @@ import { copyTemplate } from './utils/file';
 import { logInfo, logSuccess, logWarning } from './utils/message';
 
 const run = () => {
-  logInfo('App wrapper interactive CLI');
+  logInfo('App test wrapper interactive CLI');
 
   inquire()
     .then((response) => {
       copyTemplate(response);
       logSuccess('The wrapper was created generated successfully');
     })
-    .catch(() => {
+    .catch((error) => {
       logWarning(
-        'Something went wrong - the wrapper was not generated. Please try again...',
+        `An error occurred and the wrapper was not generated. Details:\n\n${error}`,
       );
     });
 };
