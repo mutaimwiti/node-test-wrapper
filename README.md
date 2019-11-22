@@ -1,22 +1,22 @@
-# App wrapper
+# App test wrapper
 
-App wrapper is elegant and scalable solution for HTTP testing in Node/Express. It works by creating a single object
-that encapsulates all the logic needed to make HTTP assertions on a Node app. This solves the problem of other
-desired behaviors like authentication.
+App test wrapper is elegant and scalable solution for HTTP testing in Node/Express. It works by creating a single
+object that encapsulates all the logic needed to make HTTP assertions on a Node app. This solves the problem of
+other desired behaviors like authentication.
 
 ### Quick start
 
-- Install app-wrapper npm package globally
+- Install app-test-wrapper npm package globally
 
-        npm install app-wrapper -g
+        npm install app-test-wrapper -g
 
   or
 
-        yarn global add app-wrapper
+        yarn global add app-test-wrapper
 
 - On your project folder run app wrapper CLI
-    
-   app-wrapper
+
+        app-test-wrapper
 
 - Select the javascript version of the wrapper to be generated
 
@@ -35,6 +35,7 @@ desired behaviors like authentication.
   ![Alt text](assets/wrapper-generated.png?raw=true)
 
 - Customize the generated wrapper to suit the specifics of your application
+
   - **../path/to/your/app**
 
     Update the import with the actual path to your app. For example `../../src/app`.
@@ -66,6 +67,7 @@ desired behaviors like authentication.
     call the respective HTTP methods on the SuperAgent instance. This allows for pre-request logic (defined in
     preRequest()) to be triggered to add any desired behaviors. The most common HTTP methods are available out
     of the box but more can be added as and when the need arises.
+
 - Use the wrapper on your tests
 
   - Import the wrapper on your test file
