@@ -17,7 +17,8 @@
   "pre-commit": [
     "clean",
     "build",
-    "lint"
+    "lint",
+    "test"
   ],
   "repository": {
     "type": "git",
