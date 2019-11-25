@@ -1,4 +1,4 @@
-import app from './utils/app';
+import app from './testUtils/app';
 
 describe('App', function() {
   it('should show welcome message', function(done) {

@@ -1,4 +1,4 @@
-import app from './utils/app';
+import app from './testUtils/app';
 
 describe('Auth', () => {
   it('should successfully login registered users', async () => {

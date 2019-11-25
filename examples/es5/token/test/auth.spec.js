@@ -1,4 +1,4 @@
-var app = require('./utils/app');
+var app = require('./testUtils/app');
 
 describe('Auth', function() {
   describe('POST /auth/login', function() {

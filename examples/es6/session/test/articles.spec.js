@@ -1,4 +1,4 @@
-import app from './utils/app';
+import app from './testUtils/app';
 
 describe('Articles', () => {
   describe('GET', () => {

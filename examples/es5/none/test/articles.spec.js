@@ -1,4 +1,4 @@
-var app = require('./utils/app');
+var app = require('./testUtils/app');
 
 describe('Articles', function() {
   it('should list all articles', function(done) {

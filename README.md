@@ -93,14 +93,14 @@ or use shorthand
 ### Examples
 
 > The examples below may not make everything crystal clear. Go through [examples](examples) for more elaborate full
-> application illustrations. On all the examples `test/utils/app.js` is the app wrapper.
+> application illustrations. On all the examples `test/testUtils/app.js` is the app wrapper.
 
 #### Wrappers
 
 ##### ES5
 
 ```javascript 1.5
-// test/utils/app.js
+// test/testUtils/app.js
 
 var supertest = require('supertest');
 var appDef = require('../../src/app');
@@ -175,7 +175,7 @@ module.exports = app;
 ##### ES6
 
 ```javascript
-// test/utils/app.js
+// test/testUtils/app.js
 
 import supertest from 'supertest';
 import appDef from '../../src/app';
@@ -251,7 +251,7 @@ export default new App();
 ```javascript 1.5
 // tests/article.spec.js
 
-var app = require('./utils/app');
+var app = require('./testUtils/app');
 
 describe('Articles', function() {
   describe('GET', function() {
@@ -277,7 +277,7 @@ describe('Articles', function() {
 ```javascript
 // tests/article.spec.js
 
-import app from './utils/app';
+import app from './testUtils/app';
 
 describe('Articles', () => {
   describe('GET', () => {

@@ -1,4 +1,4 @@
-var app = require('./utils/app');
+var app = require('./testUtils/app');
 
 describe('App', function() {
   it('should show welcome message', function(done) {
