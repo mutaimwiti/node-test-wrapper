@@ -3,7 +3,7 @@ import { copyTemplate } from './utils/file';
 import { logInfo, logSuccess, logWarning } from './utils/message';
 
 const run = () => {
-  logInfo('App test wrapper interactive CLI');
+  logInfo('Node test wrapper interactive CLI');
 
   inquire()
     .then((response) => {
