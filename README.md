@@ -1,8 +1,9 @@
 # Node test wrapper
 
-Node test wrapper is an elegant and scalable solution for HTTP testing in Node. It works by creating a single object
-that encapsulates all the logic needed to make HTTP assertions on a Node app. This solves the problem of other
-desired behaviors like authentication.
+Node test wrapper is an elegant and scalable solution for HTTP testing in Node.js. The basic idea is creation of a
+single object that encapsulates all the logic needed to make HTTP assertions on a Node app. Crucially, this solves
+the problem of other desired behaviors like authentication. Should the need arise to change or modify the HTTP
+assertion library or logic only the wrapper needs to be modified.
 
 ### Quick start
 
@@ -10,23 +11,23 @@ desired behaviors like authentication.
 
         npm install node-test-wrapper -g
 
-    or
+  or
 
         yarn global add node-test-wrapper
 
 - On your project folder run app wrapper CLI
 
-        node-test-wrapper   
-        
-    or use shorthand
-    
+        node-test-wrapper
+
+or use shorthand
+
         test-wrapper
 
 - Select the javascript version of the wrapper to be generated
 
   ![Image missing](assets/select-js-version.png?raw=true)
 
-- Select the type of authentication your application uses
+- Select the type of authentication that your application uses
 
   ![Image missing](assets/select-auth-type.png?raw=true)
 
@@ -40,9 +41,14 @@ desired behaviors like authentication.
 
 - Customize the generated wrapper to suit the specifics of your application
 
+  The generated wrapper has several stubs that need to be updated:
+
   - **../path/to/your/app**
 
-    Update the import with the actual path to your app. For example `../../src/app`.
+    Update the import with the actual path to your app. For example `../../src/app`. As a side note, there is
+    merit in avoiding the creation of a server in the application definition. Tools like
+    [SuperTest](https://github.com/visionmedia/supertest) and [Chai HTTP](https://www.chaijs.com/plugins/chai-http/)
+    will do this automatically preventing problems with application port when executing tests.
 
   - **login()**
 
@@ -71,16 +77,18 @@ desired behaviors like authentication.
 
     When making HTTP assertions these methods are the methods that should be triggered. Under the hood, they
     call the respective HTTP methods on the SuperAgent instance. This allows for pre-request logic (defined in
-    preRequest()) to be triggered to add any desired behaviors. The most common HTTP methods are available out
-    of the box but more can be added as and when the need arises.
+    preRequest()) to be triggered to add any desired behaviors. The most commonly used HTTP methods are available
+    out of the box but more can be added as and when the need arises.
 
 - Use the wrapper on your tests
 
   - Import the wrapper on your test file
   - Make HTTP assertions via the wrapper
   - Where authentication is required invoke `login()`, `loginRandom()` or `logout()` based on the desired behavior
-  - Add any other desired behaviors as functions on the wrapper. Invoke the function as and when any behavior
-    is required.
+  - Add any other desired behaviors as functions on the wrapper. Invoke the functions as and when the behaviors are
+    required as is the case with authentication
+
+> Read this [medium article]() for more details on the the solution.
 
 ### Examples
 
