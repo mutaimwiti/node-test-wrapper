@@ -37,7 +37,7 @@ or use shorthand
 
   The wrapper is generated and placed on the path you chose
 
-  ![Image missing](assets/wrapper-generated.png?raw=true)
+  ![Image missing](assets/generated-wrapper.png?raw=true)
 
 - Customize the generated wrapper to suit the specifics of your application
 
