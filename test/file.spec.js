@@ -1,4 +1,10 @@
-import { jsExtensionPath, fileAvailable } from '../src/utils/file';
+import { mkdir } from 'shelljs';
+
+import {
+  fileAvailable,
+  jsExtensionPath,
+  sanitizeTemplateDestination,
+} from '../src/utils/file';
 
 describe('utils/file.js', () => {
   describe('jsExtensionPath()', () => {
@@ -54,6 +60,22 @@ describe('utils/file.js', () => {
 
     it('should return true if file path is available', () => {
       expect(fileAvailable('tests/stubs/testFile.js')).toEqual(true);
+    });
+  });
+
+  describe('sanitizeTemplateDestination()', () => {
+    beforeEach(() => {
+      mkdir.mockClear();
+    });
+
+    it('should try to create parent directory if file path is provided', () => {
+      sanitizeTemplateDestination('test/stubs/bar/foo.js');
+      expect(mkdir).toHaveBeenCalledTimes(1);
+    });
+
+    it('should do nothing if the file is specified directly', () => {
+      sanitizeTemplateDestination('foo.js');
+      expect(mkdir).not.toHaveBeenCalled();
     });
   });
 });

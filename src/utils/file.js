@@ -84,4 +84,9 @@ const copyTemplate = (options) => {
   fs.copyFileSync(source, destination);
 };
 
-export { jsExtensionPath, copyTemplate, fileAvailable };
+export {
+  copyTemplate,
+  fileAvailable,
+  jsExtensionPath,
+  sanitizeTemplateDestination,
+};
