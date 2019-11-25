@@ -1,7 +1,7 @@
 {
   "name": "node-test-wrapper",
   "version": "0.1.0",
-  "description": "An elegant and scalable solution for HTTP testing in Node",
+  "description": "An elegant and scalable solution for HTTP testing in Node.js",
   "main": "index.js",
   "files": [
     "/lib"
