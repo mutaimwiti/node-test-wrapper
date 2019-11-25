@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "An elegant and scalable solution for HTTP testing in Node",
   "main": "index.js",
+  "files": [
+    "/lib"
+  ],
   "scripts": {
     "clean": "rimraf lib",
     "copy:assets": "rsync -a --exclude=.eslintrc --exclude=.prettierrc src/assets lib",
