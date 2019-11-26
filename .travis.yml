@@ -3,12 +3,19 @@ language: node_js
 node_js:
   - 12
   - 11
-  - 10
   - 9
-  - 8
   - 7
+  - 6
+  - 5
+  - 4
 
 cache:
-  yarn: true
+  npm: true
   directories:
     - node_modules
+
+install:
+  - npm install
+
+script:
+  - npm test
