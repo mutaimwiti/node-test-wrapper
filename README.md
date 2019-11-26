@@ -1,5 +1,10 @@
 # Node test wrapper
 
+[![build](https://travis-ci.org/mutaimwiti/node-test-wrapper.svg?branch=master)](https://travis-ci.org/mutaimwiti/node-test-wrapper)
+[![version](https://img.shields.io/npm/v/node-test-wrapper.svg)](https://www.npmjs.com/package/node-test-wrapper)
+[![downloads](https://img.shields.io/npm/dm/node-test-wrapper.svg)](https://www.npmjs.com/package/node-test-wrapper)
+[![license](https://img.shields.io/npm/l/node-test-wrapper.svg)](https://www.npmjs.com/package/node-test-wrapper)
+
 Node test wrapper is an elegant and scalable solution for HTTP testing in Node.js. The basic idea is creation of a
 single object that encapsulates all the logic needed to make HTTP assertions on a Node app. Crucially, this solves
 the problem of other desired behaviors like authentication. Should the need arise to change or modify the HTTP
