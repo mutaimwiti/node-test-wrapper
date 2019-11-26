@@ -12,7 +12,8 @@
     "compile": "babel src -d lib --ignore src/assets",
     "build": "yarn compile && yarn copy:assets",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepublishOnly": "yarn clean && yarn build && yarn lint && yarn test"
   },
   "pre-commit": [
     "clean",
