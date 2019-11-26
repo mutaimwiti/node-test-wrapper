@@ -93,7 +93,8 @@ or use shorthand
   - Add any other desired behaviors as functions on the wrapper. Invoke the functions as and when the behaviors are
     required as is the case with authentication
 
-> Read this [medium article]() for more details on the the solution.
+> Read this [medium article](https://medium.com/@mutaimwiti/node-js-http-testing-using-node-test-wrapper-7b15d7483d38)
+> for more details on the the solution.
 
 ### Examples
 
