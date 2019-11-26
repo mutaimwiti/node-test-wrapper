@@ -1,6 +1,6 @@
 {
   "name": "node-test-wrapper",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An elegant and scalable solution for HTTP testing in Node.js",
   "main": "index.js",
   "files": [
@@ -48,7 +48,7 @@
   "bugs": {
     "url": "https://github.com/mutaimwiti/node-test-wrapper/issues"
   },
-  "homepage": "https://gitlab.com/mutaimwiti/node-test-wrapper#readme",
+  "homepage": "https://github.com/mutaimwiti/node-test-wrapper#readme",
   "bin": {
     "test-wrapper": "./index.js",
     "node-test-wrapper": "./index.js"
