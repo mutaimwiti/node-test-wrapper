@@ -266,12 +266,12 @@ describe('Articles', function() {
     });
 
     it('should allow authenticated users to list all articles', function(done) {
-      app.loginRandom();
-
-      app.get('/articles').then(function(res) {
-        expect(res.body.articles).toEqual('All articles');
-        app.logout();
-        done();
+      app.loginRandom(function() {
+        app.get('/articles').then(function(res) {
+          expect(res.body.articles).toEqual('All articles');
+          app.logout();
+          done();
+        });
       });
     });
   });
