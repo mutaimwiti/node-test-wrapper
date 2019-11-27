@@ -101,9 +101,9 @@ or use shorthand
 > The examples below may not make everything crystal clear. Go through [examples](examples) for more elaborate full
 > application illustrations. On all the examples `test/testUtils/app.js` is the app wrapper.
 
-#### Wrappers
+#### ES5
 
-##### ES5
+##### Wrapper
 
 ```javascript 1.5
 // test/testUtils/app.js
@@ -178,7 +178,34 @@ var app = {
 module.exports = app;
 ```
 
-##### ES6
+##### Test
+```javascript 1.5
+// test/article.spec.js
+
+var app = require('./testUtils/app');
+
+describe('Articles', function() {
+  describe('GET', function() {
+    it('should not allow unauthenticated users to list all articles', function(done) {
+      app.get('/articles').expect(401, done);
+    });
+
+    it('should allow authenticated users to list all articles', function(done) {
+      app.loginRandom(function() {
+        app.get('/articles').then(function(res) {
+          expect(res.body.articles).toEqual('All articles');
+          app.logout();
+          done();
+        });
+      });
+    });
+  });
+});
+```
+
+#### ES6
+
+##### Wrapper
 
 ```javascript
 // test/testUtils/app.js
@@ -250,38 +277,9 @@ class App {
 export default new App();
 ```
 
-#### Tests
-
-##### ES5
-
-```javascript 1.5
-// tests/article.spec.js
-
-var app = require('./testUtils/app');
-
-describe('Articles', function() {
-  describe('GET', function() {
-    it('should not allow unauthenticated users to list all articles', function(done) {
-      app.get('/articles').expect(401, done);
-    });
-
-    it('should allow authenticated users to list all articles', function(done) {
-      app.loginRandom(function() {
-        app.get('/articles').then(function(res) {
-          expect(res.body.articles).toEqual('All articles');
-          app.logout();
-          done();
-        });
-      });
-    });
-  });
-});
-```
-
-##### ES6
-
+##### Test
 ```javascript
-// tests/article.spec.js
+// test/article.spec.js
 
 import app from './testUtils/app';
 
