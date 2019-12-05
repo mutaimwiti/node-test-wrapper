@@ -1,7 +1,7 @@
 import auth from 'basic-auth';
-import { findUser } from './utils';
+import User from './models/user';
 
-const checkAuth = (req, res, next) => {
+const checkAuth = async (req, res, next) => {
   if (req.path === '/') {
     return next();
   }
@@ -13,7 +13,7 @@ const checkAuth = (req, res, next) => {
 
     const data = { username: name, password: pass };
 
-    if (findUser(data)) {
+    if (await User.findOne(data)) {
       return next();
     }
   }
