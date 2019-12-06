@@ -1,6 +1,7 @@
+import faker from 'faker';
 import supertest from 'supertest';
 import appDef from '../../src/app';
-import { mockUsers } from '../../src/__mock__';
+import { User } from '../../src/models';
 
 class App {
   constructor() {
@@ -42,7 +43,10 @@ class App {
     // create a random user - entirely up to your persistence system
     // add logic to generate user authentication credentials here ..
     // replace the username and password with the actual values
-    const user = mockUsers[Math.floor(Math.random() * mockUsers.length)];
+    const user = await User.create({
+      username: faker.internet.userName(),
+      password: faker.internet.password(),
+    });
 
     this.credentials = {
       username: user.username,
