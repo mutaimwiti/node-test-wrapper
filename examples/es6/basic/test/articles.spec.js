@@ -1,7 +1,41 @@
+import faker from 'faker';
 import app from './testUtils/app';
+import { connect } from '../src/db';
 import { Article } from '../src/models';
 
+const makeArticle = (overrides = {}) => {
+  return {
+    title: faker.lorem.word(),
+    body: faker.lorem.sentence(),
+    ...overrides,
+  };
+};
+
+const createArticle = (overrides = {}) => {
+  return Article.create(makeArticle(overrides));
+};
+
+const articleFields = (data) => {
+  const { _id, title, body } = data;
+
+  return { _id: _id.toString(), title, body };
+};
+
 describe('Articles', () => {
+  let connection;
+
+  beforeAll(async () => {
+    connection = await connect();
+  });
+
+  afterAll(async () => {
+    await connection.disconnect();
+  });
+
+  beforeEach(async () => {
+    await app.logout();
+  });
+
   describe('GET', () => {
     it('should not allow unauthenticated users to list all articles', async () => {
       const res = await app.get('/articles');
@@ -9,6 +43,8 @@ describe('Articles', () => {
     });
 
     it('should allow authenticated users to list all articles', async () => {
+      const existingArticle = await createArticle();
+
       await app.loginRandom();
 
       const {
@@ -17,9 +53,12 @@ describe('Articles', () => {
       } = await app.get('/articles');
 
       expect(status).toBe(200);
-      expect(articles).toEqual([]);
 
-      app.logout();
+      expect(articles).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining(articleFields(existingArticle)),
+        ]),
+      );
     });
   });
 
@@ -30,26 +69,17 @@ describe('Articles', () => {
     });
 
     it('should allow authenticated users to get one article', async () => {
-      const data = {
-        title: 'foo',
-        body: 'bar',
-      };
-
-      const article = await Article.create(data);
+      const existingArticle = await createArticle();
 
       await app.loginRandom();
 
       const {
         status,
-        body: {
-          article: { title, body },
-        },
-      } = await app.get(`/articles/${article._id}`);
+        body: { article },
+      } = await app.get(`/articles/${existingArticle._id}`);
 
       expect(status).toBe(200);
-      expect({ title, body }).toEqual(data);
-
-      app.logout();
+      expect(articleFields(article)).toEqual(articleFields(existingArticle));
     });
   });
 
@@ -60,24 +90,17 @@ describe('Articles', () => {
     });
 
     it('should allow authenticated users to get create articles', async () => {
-      const data = {
-        title: 'bar',
-        body: 'baz',
-      };
+      const articleData = makeArticle();
 
       await app.loginRandom();
 
       const {
         status,
-        body: {
-          article: { title, body },
-        },
-      } = await app.post('/articles').send(data);
+        body: { article },
+      } = await app.post('/articles').send(articleData);
 
       expect(status).toBe(201);
-      expect({ title, body }).toEqual(data);
-
-      app.logout();
+      expect(article).toEqual(expect.objectContaining(articleData));
     });
   });
 
@@ -88,29 +111,19 @@ describe('Articles', () => {
     });
 
     it('should allow authenticated users to update an article', async () => {
-      const article = await Article.create({
-        title: 'foo',
-        body: 'bar',
-      });
+      const existingArticle = await createArticle();
 
-      const updates = {
-        title: 'bar',
-        body: 'baz',
-      };
+      const updates = makeArticle();
 
       await app.loginRandom();
 
       const {
         status,
-        body: {
-          article: { title, body },
-        },
-      } = await app.put(`/articles/${article._id}`).send(updates);
+        body: { article },
+      } = await app.put(`/articles/${existingArticle._id}`).send(updates);
 
       expect(status).toBe(200);
-      expect({ title, body }).toEqual(updates);
-
-      app.logout();
+      expect(article).toEqual(expect.objectContaining(updates));
     });
   });
 
@@ -121,10 +134,7 @@ describe('Articles', () => {
     });
 
     it('should allow authenticated users to delete an article', async () => {
-      const article = await Article.create({
-        title: 'foo',
-        body: 'bar',
-      });
+      const article = await createArticle();
 
       await app.loginRandom();
 
@@ -133,8 +143,6 @@ describe('Articles', () => {
       } = await app.delete(`/articles/${article._id}`);
 
       expect(message).toEqual('Article deleted successfully');
-
-      app.logout();
     });
   });
 });

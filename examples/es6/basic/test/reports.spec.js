@@ -1,7 +1,41 @@
+import faker from 'faker';
 import app from './testUtils/app';
+import { connect } from '../src/db';
 import { Report } from '../src/models';
 
+const makeReport = (overrides = {}) => {
+  return {
+    title: faker.lorem.word(),
+    body: faker.lorem.sentence(),
+    ...overrides,
+  };
+};
+
+const createReport = (overrides = {}) => {
+  return Report.create(makeReport(overrides));
+};
+
+const reportFields = (data) => {
+  const { _id, title, body } = data;
+
+  return { _id: _id.toString(), title, body };
+};
+
 describe('Reports', () => {
+  let connection;
+
+  beforeAll(async () => {
+    connection = await connect();
+  });
+
+  afterAll(async () => {
+    await connection.disconnect();
+  });
+
+  beforeEach(async () => {
+    await app.logout();
+  });
+
   describe('GET', () => {
     it('should not allow unauthenticated users to list all reports', async () => {
       const res = await app.get('/reports');
@@ -9,6 +43,8 @@ describe('Reports', () => {
     });
 
     it('should allow authenticated users to list all reports', async () => {
+      const existingReport = await createReport();
+
       await app.loginRandom();
 
       const {
@@ -17,9 +53,12 @@ describe('Reports', () => {
       } = await app.get('/reports');
 
       expect(status).toBe(200);
-      expect(reports).toEqual([]);
 
-      app.logout();
+      expect(reports).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining(reportFields(existingReport)),
+        ]),
+      );
     });
   });
 
@@ -30,26 +69,17 @@ describe('Reports', () => {
     });
 
     it('should allow authenticated users to get one report', async () => {
-      const data = {
-        title: 'foo',
-        body: 'bar',
-      };
-
-      const report = await Report.create(data);
+      const existingReport = await createReport();
 
       await app.loginRandom();
 
       const {
         status,
-        body: {
-          report: { title, body },
-        },
-      } = await app.get(`/reports/${report._id}`);
+        body: { report },
+      } = await app.get(`/reports/${existingReport._id}`);
 
       expect(status).toBe(200);
-      expect({ title, body }).toEqual(data);
-
-      app.logout();
+      expect(reportFields(report)).toEqual(reportFields(existingReport));
     });
   });
 
@@ -60,24 +90,17 @@ describe('Reports', () => {
     });
 
     it('should allow authenticated users to get create reports', async () => {
-      const data = {
-        title: 'bar',
-        body: 'baz',
-      };
+      const reportData = makeReport();
 
       await app.loginRandom();
 
       const {
         status,
-        body: {
-          report: { title, body },
-        },
-      } = await app.post('/reports').send(data);
+        body: { report },
+      } = await app.post('/reports').send(reportData);
 
       expect(status).toBe(201);
-      expect({ title, body }).toEqual(data);
-
-      app.logout();
+      expect(report).toEqual(expect.objectContaining(reportData));
     });
   });
 
@@ -88,29 +111,19 @@ describe('Reports', () => {
     });
 
     it('should allow authenticated users to update an report', async () => {
-      const report = await Report.create({
-        title: 'foo',
-        body: 'bar',
-      });
+      const existingReport = await createReport();
 
-      const updates = {
-        title: 'bar',
-        body: 'baz',
-      };
+      const updates = makeReport();
 
       await app.loginRandom();
 
       const {
         status,
-        body: {
-          report: { title, body },
-        },
-      } = await app.put(`/reports/${report._id}`).send(updates);
+        body: { report },
+      } = await app.put(`/reports/${existingReport._id}`).send(updates);
 
       expect(status).toBe(200);
-      expect({ title, body }).toEqual(updates);
-
-      app.logout();
+      expect(report).toEqual(expect.objectContaining(updates));
     });
   });
 
@@ -121,10 +134,7 @@ describe('Reports', () => {
     });
 
     it('should allow authenticated users to delete an report', async () => {
-      const report = await Report.create({
-        title: 'foo',
-        body: 'bar',
-      });
+      const report = await createReport();
 
       await app.loginRandom();
 
@@ -133,8 +143,6 @@ describe('Reports', () => {
       } = await app.delete(`/reports/${report._id}`);
 
       expect(message).toEqual('Report deleted successfully');
-
-      app.logout();
     });
   });
 });

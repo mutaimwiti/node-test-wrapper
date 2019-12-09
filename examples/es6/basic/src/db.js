@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 
-const MONGO_URL = 'mongodb://localhost:27017/node-test-wrapper-es6-basic';
+const DEV_URL = 'mongodb://localhost:27017/ntw-es6-basic';
+const TEST_URL = `${DEV_URL}-test`;
+
+const URL = process.env.NODE_ENV === 'test' ? TEST_URL : DEV_URL;
 
 const options = {
   useNewUrlParser: true,
@@ -8,7 +11,7 @@ const options = {
 };
 
 const connect = (callback = null) => {
-  return mongoose.connect(MONGO_URL, options, callback);
+  return mongoose.connect(URL, options, callback);
 };
 
 const disconnect = (callback = null) => {

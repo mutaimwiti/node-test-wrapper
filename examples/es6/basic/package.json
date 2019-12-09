@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon --exec babel-node index.js",
-    "test": "jest",
+    "test": "NODE_ENV=test jest",
     "seed": "babel-node --presets @babel/preset-env src/seeder/seed.js",
     "seed:undo": "babel-node --presets @babel/preset-env src/seeder/undo.js"
   },
@@ -28,9 +28,6 @@
     "nodemon": "^1.19.4"
   },
   "jest": {
-    "testEnvironment": "node",
-    "setupFilesAfterEnv": [
-      "<rootDir>test/setupTests.js"
-    ]
+    "testEnvironment": "node"
   }
 }
