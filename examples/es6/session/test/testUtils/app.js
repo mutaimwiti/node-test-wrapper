@@ -1,6 +1,6 @@
 import supertest from 'supertest';
 import appDef from '../../src/app';
-import { mockUsers } from '../../src/__mock__';
+import { createUser } from './factories/users';
 
 class App {
   constructor() {
@@ -26,7 +26,11 @@ class App {
     // the login endpoint and extracting "set-cookie" from the response headers
     // replace this with the actual implementation
 
-    const res = await this.client.post('/auth/login').send(user);
+    const { username, password } = user;
+
+    const res = await this.client
+      .post('/auth/login')
+      .send({ username, password });
 
     this.cookie = res.headers['set-cookie'];
   }
@@ -46,9 +50,13 @@ class App {
     // replace this with the actual implementation
 
     // in this example we randomly select one of our mocked users
-    const user = mockUsers[Math.floor(Math.random() * mockUsers.length)];
+    const user = createUser();
 
-    const res = await this.client.post('/auth/login').send(user);
+    const { username, password } = user;
+
+    const res = await this.client
+      .post('/auth/login')
+      .send({ username, password });
 
     this.cookie = res.headers['set-cookie'];
 
