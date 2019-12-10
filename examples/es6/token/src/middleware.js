@@ -1,14 +1,17 @@
-import { decodeAuthToken, findUser, renderUnAuthorized } from './utils';
+import { User } from './models';
+import { decodeAuthToken, renderUnAuthorized } from './utils';
 
-const checkAuth = (req, res, next) => {
+const checkAuth = async (req, res, next) => {
   if (req.path === '/' || req.path === '/auth/login') {
     return next();
   }
 
   try {
-    const reqUser = decodeAuthToken(req);
+    const { username, password } = decodeAuthToken(req);
 
-    return findUser(reqUser) ? next() : renderUnAuthorized(res);
+    const user = { username, password };
+
+    return (await User.findOne(user)) ? next() : renderUnAuthorized(res);
   } catch (e) {
     return renderUnAuthorized(res);
   }

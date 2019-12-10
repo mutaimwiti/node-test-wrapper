@@ -1,39 +1,33 @@
 import app from './testUtils/app';
+import { makeUser, createUser } from './testUtils/factories/users';
 
 describe('Auth', () => {
   it('should successfully login registered users', async () => {
-    const user = {
-      username: 'admin',
-      password: 'admin_pass',
-    };
+    const existingUser = createUser();
 
     await app
       .post('/auth/login')
-      .send(user)
+      .send(existingUser)
       .expect(201);
   });
 
   it('should not login unregistered users', async () => {
-    const user = {
-      username: 'foo',
-      password: 'foo_pass',
-    };
+    const nonExistingUser = makeUser();
 
     await app
       .post('/auth/login')
-      .send(user)
+      .send(nonExistingUser)
       .expect(401);
   });
 
   it('should not log in users with incorrect password', async () => {
-    const user = {
-      username: 'admin',
-      password: 'foo_pass',
-    };
+    const existingUser = createUser();
+
+    existingUser.password = 'some_pass';
 
     await app
       .post('/auth/login')
-      .send(user)
+      .send(existingUser)
       .expect(401);
   });
 
