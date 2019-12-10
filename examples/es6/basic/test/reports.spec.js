@@ -1,18 +1,5 @@
-import faker from 'faker';
 import app from './testUtils/app';
-import { Report } from '../src/models';
-
-const makeReport = (overrides = {}) => {
-  return {
-    title: faker.lorem.word(),
-    body: faker.lorem.sentence(),
-    ...overrides,
-  };
-};
-
-const createReport = (overrides = {}) => {
-  return Report.create(makeReport(overrides));
-};
+import { createReport, makeReport } from './testUtils/factories/reports';
 
 const reportFields = (data) => {
   const { _id, title, body } = data;

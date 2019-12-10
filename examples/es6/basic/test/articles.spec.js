@@ -1,18 +1,5 @@
-import faker from 'faker';
 import app from './testUtils/app';
-import { Article } from '../src/models';
-
-const makeArticle = (overrides = {}) => {
-  return {
-    title: faker.lorem.word(),
-    body: faker.lorem.sentence(),
-    ...overrides,
-  };
-};
-
-const createArticle = (overrides = {}) => {
-  return Article.create(makeArticle(overrides));
-};
+import { createArticle, makeArticle } from './testUtils/factories/articles';
 
 const articleFields = (data) => {
   const { _id, title, body } = data;
