@@ -1,12 +1,13 @@
 import { Router } from 'express';
-import { findUser, generateAuthToken, renderUnAuthorized } from '../utils';
+import { User } from '../models';
+import { generateAuthToken, renderUnAuthorized } from '../utils';
 
 const router = Router();
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   const data = req.body;
 
-  if (findUser(data)) {
+  if (await User.findOne(data)) {
     try {
       const token = generateAuthToken(data);
 
