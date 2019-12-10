@@ -28,6 +28,7 @@
     "nodemon": "^1.19.4"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": ["<rootDir>/test/testUtils/setup.js"]
   }
 }
