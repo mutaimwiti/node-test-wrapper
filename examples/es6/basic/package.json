@@ -8,8 +8,8 @@
   "scripts": {
     "start": "nodemon --exec babel-node index.js",
     "test": "NODE_ENV=test jest",
-    "seed": "babel-node --presets @babel/preset-env src/seeder/seed.js",
-    "seed:undo": "babel-node --presets @babel/preset-env src/seeder/undo.js"
+    "seed": "babel-node --presets @babel/preset-env seeder/seed.js",
+    "seed:undo": "babel-node --presets @babel/preset-env seeder/undo.js"
   },
   "dependencies": {
     "@babel/runtime": "^7.7.2",
