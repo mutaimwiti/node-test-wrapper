@@ -1,33 +1,46 @@
 import { Router } from 'express';
+import { Article } from '../models';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  return res.json({ articles: 'All articles' });
+router.get('/', async (req, res) => {
+  return res.json({ articles: await Article.find({}) });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
 
-  return res.json({ article: `Article ${id}` });
+  return res.json({ article: await Article.findOne({ _id: id }) });
 });
 
-router.post('/', (req, res) => {
-  const { title } = req.body;
+router.post('/', async (req, res) => {
+  const article = await Article.create({ ...req.body });
 
-  return res.json({ message: `Created article ${title}` });
+  return res
+    .status(201)
+    .json({ article, message: 'Created article successfully' });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { title, body } = req.body;
+
+  const article = await Article.findOne({ _id: id });
+
+  article.title = title;
+  article.body = body;
+
+  await article.save();
+
+  return res.json({ article, message: 'Updated article successfully' });
+});
+
+router.delete('/:id', async (req, res) => {
   const { id } = req.params;
 
-  return res.json({ message: `Updated article ${id}` });
-});
+  await Article.findOneAndDelete({ _id: id });
 
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
-
-  return res.json({ message: `Deleted article ${id}` });
+  return res.json({ message: 'Article deleted successfully' });
 });
 
 export default router;

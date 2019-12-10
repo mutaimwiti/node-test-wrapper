@@ -1,33 +1,75 @@
 import app from './testUtils/app';
+import { createReport, makeReport } from './testUtils/factories/reports';
+
+const reportFields = (data) => {
+  const { _id, title, body } = data;
+
+  return { _id: _id.toString(), title, body };
+};
 
 describe('Reports', () => {
-  it('should list all reports', async () => {
-    const { body } = await app.get('/reports');
+  it('should allow users to list all reports', async () => {
+    const existingReport = await createReport();
 
-    expect(body.reports).toEqual('All reports');
+    const {
+      status,
+      body: { reports },
+    } = await app.get('/reports');
+
+    expect(status).toBe(200);
+
+    expect(reports).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining(reportFields(existingReport)),
+      ]),
+    );
   });
 
-  it('should get one report', async () => {
-    const { body } = await app.get('/reports/6');
+  it('should allow users to get one report', async () => {
+    const existingReport = await createReport();
 
-    expect(body.report).toEqual('Report 6');
+    const {
+      status,
+      body: { report },
+    } = await app.get(`/reports/${existingReport._id}`);
+
+    expect(status).toBe(200);
+    expect(reportFields(report)).toEqual(reportFields(existingReport));
   });
 
-  it('should create an report', async () => {
-    const { body } = await app.post('/reports').send({ title: 'foo' });
+  it('should allow users to get one report', async () => {
+    const reportData = makeReport();
 
-    expect(body.message).toEqual('Created report foo');
+    const {
+      status,
+      body: { report },
+    } = await app.post('/reports').send(reportData);
+
+    expect(status).toBe(201);
+    expect(report).toEqual(expect.objectContaining(reportData));
   });
 
-  it('should update an report', async () => {
-    const { body } = await app.put('/reports/14');
+  it('should allow users to update an report', async () => {
+    const existingReport = await createReport();
 
-    expect(body.message).toEqual('Updated report 14');
+    const updates = makeReport();
+
+    const {
+      status,
+      body: { report },
+    } = await app.put(`/reports/${existingReport._id}`).send(updates);
+
+    expect(status).toBe(200);
+    expect(report).toEqual(expect.objectContaining(updates));
   });
 
-  it('should delete an report', async () => {
-    const { body } = await app.delete('/reports/2');
+  it('should allow users to delete an report', async () => {
+    const report = await createReport();
 
-    expect(body.message).toEqual('Deleted report 2');
+    const {
+      body: { message },
+    } = await app.delete(`/reports/${report._id}`);
+
+    expect(message).toEqual('Report deleted successfully');
   });
 });
