@@ -1,8 +1,7 @@
-import { User, Report, Article } from '../models';
-import { mockUsers, mockReports, mockArticles } from '../__mock__';
-import { connect, disconnect } from '../db';
+import { User, Report, Article } from '../src/models';
 
-console.log(User);
+import { connect, disconnect } from '../src/db';
+import { mockUsers, mockReports, mockArticles } from './mockData';
 
 const seed = async () => {
   console.log('=============== Clearing database ===============');
