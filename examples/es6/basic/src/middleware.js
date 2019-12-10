@@ -13,13 +13,7 @@ const checkAuth = async (req, res, next) => {
 
     const data = { username: name, password: pass };
 
-    const user = await User.findOne(data);
-
-    if (!user) {
-      console.log(user);
-    }
-
-    if (user) {
+    if (await User.findOne(data)) {
       return next();
     }
   }
