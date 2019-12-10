@@ -1,6 +1,5 @@
 import faker from 'faker';
 import app from './testUtils/app';
-import { connect } from '../src/db';
 import { Report } from '../src/models';
 
 const makeReport = (overrides = {}) => {
@@ -22,16 +21,6 @@ const reportFields = (data) => {
 };
 
 describe('Reports', () => {
-  let connection;
-
-  beforeAll(async () => {
-    connection = await connect();
-  });
-
-  afterAll(async () => {
-    await connection.disconnect();
-  });
-
   beforeEach(async () => {
     await app.logout();
   });
