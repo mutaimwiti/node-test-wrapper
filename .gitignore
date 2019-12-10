@@ -60,9 +60,12 @@ typings/
 # next.js build output
 .next
 
-#ides
+# ides
 .vscode
 .idea
 
-#lib
+# lib
 lib
+
+# DS_Store
+.DS_Store
