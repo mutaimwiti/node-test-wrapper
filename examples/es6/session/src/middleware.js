@@ -1,6 +1,6 @@
-import { findUser } from './utils';
+import User from './models/user';
 
-const checkAuth = (req, res, next) => {
+const checkAuth = async (req, res, next) => {
   if (
     req.path === '/' ||
     req.path === '/auth/login' ||
@@ -12,7 +12,7 @@ const checkAuth = (req, res, next) => {
   const reqUser = req.session.user;
 
   if (reqUser) {
-    if (findUser(reqUser)) {
+    if (await User.findOne(reqUser)) {
       return next();
     }
   }

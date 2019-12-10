@@ -1,13 +1,13 @@
 import { Router } from 'express';
-import { findUser } from '../utils';
+import User from '../models/user';
 
 const router = Router();
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   if (!req.session.user) {
     const data = req.body;
 
-    if (findUser(data)) {
+    if (await User.findOne(data)) {
       req.session.user = data;
       return res.status(201).json({ message: 'Logged in successfully' });
     }
