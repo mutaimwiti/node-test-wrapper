@@ -1,8 +1,7 @@
 import supertest from 'supertest';
 import appDef from '../../src/app';
-
-const { generateAuthToken } = require('../../src/utils');
-const { mockUsers } = require('../../src/__mock__');
+import { createUser } from './factories/users';
+import { generateAuthToken } from '../../src/utils';
 
 class App {
   constructor() {
@@ -25,8 +24,9 @@ class App {
   async login(user) {
     // add logic to generate user authentication details here ...
     // replace this with the actual implementation
+    const { username, password } = user;
 
-    this.token = await generateAuthToken(user);
+    this.token = await generateAuthToken({ username, password });
   }
 
   /**
@@ -44,9 +44,11 @@ class App {
     // replace this with the actual implementation
 
     // in this example we randomly select one of our mocked users
-    const user = mockUsers[Math.floor(Math.random() * mockUsers.length)];
+    const user = await createUser();
 
-    this.token = await generateAuthToken(user);
+    const { username, password } = user;
+
+    this.token = await generateAuthToken({ username, password });
 
     return user;
   }
