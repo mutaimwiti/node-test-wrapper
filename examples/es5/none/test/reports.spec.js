@@ -1,26 +1,79 @@
 var app = require('./testUtils/app');
+var factories = require('./testUtils/factories/reports');
+
+var createReport = factories.createReport;
+var makeReport = factories.makeReport;
+
+function reportFields(data) {
+  return { _id: data._id.toString(), title: data.title, body: data.body };
+}
 
 describe('Reports', function() {
-  it('should list all reports', function(done) {
-    app.get('/reports').expect({ reports: 'All reports' }, done);
+  it('should allow users to list all reports', function(done) {
+    createReport().then(function(existingReport) {
+      app.get('/reports').then(function(res) {
+        expect(res.status).toBe(200);
+
+        expect(res.body.reports).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining(reportFields(existingReport))
+          ])
+        );
+
+        done();
+      });
+    });
   });
 
-  it('should get one report', function(done) {
-    app.get('/reports/6').expect({ report: 'Report 6' }, done);
+  it('should allow users to get one report', function(done) {
+    createReport().then(function(existingReport) {
+      app.get('/reports/' + existingReport._id).then(function(res) {
+        expect(res.status).toBe(200);
+        expect(reportFields(res.body.report)).toEqual(
+          reportFields(existingReport)
+        );
+
+        done();
+      });
+    });
   });
 
-  it('should create an report', function(done) {
+  it('should allow users to get one report', function(done) {
+    var reportData = makeReport();
+
     app
       .post('/reports')
-      .send({ title: 'foo' })
-      .expect({ message: 'Created report foo' }, done);
+      .send(reportData)
+      .then(function(res) {
+        expect(res.status).toBe(201);
+        expect(res.body.report).toEqual(expect.objectContaining(reportData));
+
+        done();
+      });
   });
 
-  it('should update an report', function(done) {
-    app.put('/reports/14').expect({ message: 'Updated report 14' }, done);
+  it('should allow users to update an report', function(done) {
+    createReport().then(function(existingReport) {
+      var updates = makeReport();
+      app
+        .put('/reports/' + existingReport._id)
+        .send(updates)
+        .then(function(res) {
+          expect(res.status).toBe(200);
+          expect(res.body.report).toEqual(expect.objectContaining(updates));
+
+          done();
+        });
+    });
   });
 
-  it('should delete an report', function(done) {
-    app.delete('/reports/2').expect({ message: 'Deleted report 2' }, done);
+  it('should allow users to delete an report', function(done) {
+    createReport().then(function(report) {
+      app.delete('/reports/' + report._id).then(function(res) {
+        expect(res.body.message).toEqual('Report deleted successfully');
+
+        done();
+      });
+    });
   });
 });
