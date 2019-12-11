@@ -1,7 +1,6 @@
 var Router = require('express').Router;
-var models = require('../models');
+var Article = require('../models').Article;
 
-var Article = models.Article;
 var router = Router();
 
 router.get('/', function(req, res) {
