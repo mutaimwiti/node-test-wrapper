@@ -1,6 +1,5 @@
-var utils = require('./utils');
-
-var findUser = utils.findUser;
+var User = require('./models').User;
+var renderUnAuthorized = require('./utils').renderUnAuthorized;
 
 function checkAuth(req, res, next) {
   if (
@@ -14,14 +13,15 @@ function checkAuth(req, res, next) {
   var reqUser = req.session.user;
 
   if (reqUser) {
-    if (findUser(reqUser)) {
+    return User.findOne(reqUser, function(err) {
+      if (err) {
+        return renderUnAuthorized(res);
+      }
       return next();
-    }
+    });
   }
 
-  return res.status(401).json({
-    message: 'Unauthorized'
-  });
+  return renderUnAuthorized(res);
 }
 
 module.exports.checkAuth = checkAuth;
