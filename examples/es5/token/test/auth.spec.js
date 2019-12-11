@@ -1,41 +1,41 @@
 var app = require('./testUtils/app');
+var factory = require('./testUtils/factories/users');
+
+var makeUser = factory.makeUser;
+var createUser = factory.createUser;
 
 describe('Auth', function() {
   describe('POST /auth/login', function() {
     it('should successfully login registered users', function(done) {
-      var user = {
-        username: 'admin',
-        password: 'admin_pass'
-      };
-
-      app
-        .post('/auth/login')
-        .send(user)
-        .expect(201, done);
+      createUser().then(function(existingUser) {
+        done();
+        app
+          .post('/auth/login')
+          .send(existingUser)
+          .expect(201, done);
+      });
     });
 
     it('should not login unregistered users', function(done) {
-      var user = {
-        username: 'foo',
-        password: 'foo_pass'
-      };
+      var nonExistingUser = makeUser();
 
       app
         .post('/auth/login')
-        .send(user)
+        .send(nonExistingUser)
         .expect(401, done);
     });
 
     it('should not log in users with incorrect password', function(done) {
-      var user = {
-        username: 'admin',
-        password: 'foo_pass'
-      };
+      createUser().then(function(existingUser) {
+        var user = existingUser;
 
-      app
-        .post('/auth/login')
-        .send(user)
-        .expect(401, done);
+        user.password = 'some_pass';
+
+        app
+          .post('/auth/login')
+          .send(user)
+          .expect(401, done);
+      });
     });
 
     it('should reject requests made with invalid token', function(done) {
