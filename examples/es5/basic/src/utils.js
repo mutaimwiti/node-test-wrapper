@@ -1,11 +1,7 @@
-var mock = require('./__mock__');
-
-var mockUsers = mock.mockUsers;
-
-function findUser(data) {
-  return mockUsers.find(function(user) {
-    return user.username === data.username && user.password === data.password;
+function renderUnAuthorized(res) {
+  res.status(401).json({
+    message: 'Unauthorized'
   });
 }
 
-module.exports.findUser = findUser;
+module.exports.renderUnAuthorized = renderUnAuthorized;
