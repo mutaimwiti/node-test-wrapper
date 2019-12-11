@@ -1,8 +1,6 @@
 var supertest = require('supertest');
 var appDef = require('../../src/app');
-var mock = require('../../src/__mock__');
-
-var mockUsers = mock.mockUsers;
+var createUser = require('./factories/users').createUser;
 
 var app = {
   /**
@@ -49,7 +47,7 @@ var app = {
    * permissions of the user. This will allow you to assign the random
    * user the required permission(s).
    */
-  loginRandom: function(done) {
+  loginRandom: function() {
     // create a random user - entirely up to your persistence system
     // add logic to generate auth cookie here - ideally this will involve invoking
     // the login endpoint and extracting "set-cookie" from the response headers
@@ -58,15 +56,17 @@ var app = {
     // callback or return a promise to handle this
 
     // in this example we randomly select one of our mocked users
-    var user = mockUsers[Math.floor(Math.random() * mockUsers.length)];
-
-    app.client
-      .post('/auth/login')
-      .send(user)
-      .end(function(err, res) {
-        app.cookie = res.headers['set-cookie'];
-        return err ? done(err) : done(false, user);
+    return new Promise(function(resolve) {
+      createUser().then(function(user) {
+        app.client
+          .post('/auth/login')
+          .send(user)
+          .end(function(err, res) {
+            app.cookie = res.headers['set-cookie'];
+            resolve(user);
+          });
       });
+    });
   },
 
   /**

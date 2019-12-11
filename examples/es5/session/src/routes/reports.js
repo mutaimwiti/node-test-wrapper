@@ -1,33 +1,53 @@
 var Router = require('express').Router;
+var models = require('../models');
 
+var Report = models.Report;
 var router = Router();
 
 router.get('/', function(req, res) {
-  return res.json({ reports: 'All reports' });
+  Report.find({}, function(err, reports) {
+    return res.json({ reports: reports });
+  });
 });
 
 router.get('/:id', function(req, res) {
   var id = req.params.id;
 
-  return res.json({ report: 'Report ' + id });
+  Report.findOne({ _id: id }, function(err, report) {
+    return res.json({ report: report });
+  });
 });
 
 router.post('/', function(req, res) {
-  var title = req.body.title;
+  var data = req.body;
 
-  return res.json({ message: 'Created report ' + title });
+  Report.create(data, function(err, report) {
+    return res
+      .status(201)
+      .json({ report: report, message: 'Created report successfully' });
+  });
 });
 
 router.put('/:id', function(req, res) {
-  var id = req.params.id;
+  Report.findOne({ _id: req.params.id }, function(err, report) {
+    var reportToUpdate = report;
 
-  return res.json({ message: 'Updated report ' + id });
+    reportToUpdate.title = req.body.title;
+    reportToUpdate.body = req.body.body;
+
+    reportToUpdate.save(function(error, updated) {
+      return res.json({
+        report: updated,
+        message: 'Updated report successfully'
+      });
+    });
+  });
 });
 
 router.delete('/:id', function(req, res) {
-  var id = req.params.id;
-
-  return res.json({ message: 'Deleted report ' + id });
+  Report.findOneAndDelete({ _id: req.params.id }, function() {
+    return res.json({ message: 'Report deleted successfully' });
+  });
 });
 
 module.exports = router;
