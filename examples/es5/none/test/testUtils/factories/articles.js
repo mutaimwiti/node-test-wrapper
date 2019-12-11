@@ -1,7 +1,5 @@
 var faker = require('faker');
-var models = require('../../../src/models');
-
-var Article = models.Article;
+var Article = require('../../../src/models').Article;
 
 function makeArticle(overrides) {
   var overrideData = overrides || {};
