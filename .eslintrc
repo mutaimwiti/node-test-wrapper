@@ -12,8 +12,5 @@
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module"
-  },
-  "rules": {
-    "no-underscore-dangle": [2, { "allow": ["_id"] }]
   }
 }
