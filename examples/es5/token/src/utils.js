@@ -1,17 +1,6 @@
 var jwt = require('jsonwebtoken');
-var mock = require('./__mock__');
-
-var mockUsers = mock.mockUsers;
 
 var SECRET = 'secret';
-
-function findUser(data) {
-  if (!data) return null;
-
-  return mockUsers.find(function(user) {
-    return user.username === data.username && user.password === data.password;
-  });
-}
 
 function generateAuthToken(data, done) {
   return jwt.sign(data, SECRET, done);
@@ -33,7 +22,6 @@ function renderUnAuthorized(res) {
   });
 }
 
-module.exports.findUser = findUser;
 module.exports.decodeAuthToken = decodeAuthToken;
 module.exports.generateAuthToken = generateAuthToken;
 module.exports.renderUnAuthorized = renderUnAuthorized;

@@ -1,33 +1,53 @@
 var Router = require('express').Router;
+var models = require('../models');
 
+var Article = models.Article;
 var router = Router();
 
 router.get('/', function(req, res) {
-  return res.json({ articles: 'All articles' });
+  Article.find({}, function(err, articles) {
+    return res.json({ articles: articles });
+  });
 });
 
 router.get('/:id', function(req, res) {
   var id = req.params.id;
 
-  return res.json({ article: 'Article ' + id });
+  Article.findOne({ _id: id }, function(err, article) {
+    return res.json({ article: article });
+  });
 });
 
 router.post('/', function(req, res) {
-  var title = req.body.title;
+  var data = req.body;
 
-  return res.json({ message: 'Created article ' + title });
+  Article.create(data, function(err, article) {
+    return res
+      .status(201)
+      .json({ article: article, message: 'Created article successfully' });
+  });
 });
 
 router.put('/:id', function(req, res) {
-  var id = req.params.id;
+  Article.findOne({ _id: req.params.id }, function(err, article) {
+    var articleToUpdate = article;
 
-  return res.json({ message: 'Updated article ' + id });
+    articleToUpdate.title = req.body.title;
+    articleToUpdate.body = req.body.body;
+
+    articleToUpdate.save(function(error, updated) {
+      return res.json({
+        article: updated,
+        message: 'Updated article successfully'
+      });
+    });
+  });
 });
 
 router.delete('/:id', function(req, res) {
-  var id = req.params.id;
-
-  return res.json({ message: 'Deleted article ' + id });
+  Article.findOneAndDelete({ _id: req.params.id }, function() {
+    return res.json({ message: 'Article deleted successfully' });
+  });
 });
 
 module.exports = router;

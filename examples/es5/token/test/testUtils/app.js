@@ -1,9 +1,8 @@
 var supertest = require('supertest');
 var appDef = require('../../src/app');
 var utils = require('../../src/utils');
-var mock = require('../../src/__mock__');
+var createUser = require('./factories/users').createUser;
 
-var mockUsers = mock.mockUsers;
 var generateAuthToken = utils.generateAuthToken;
 
 var app = {
@@ -25,17 +24,18 @@ var app = {
    * permission(s).
    *
    * @param user
-   * @param done
    */
-  login: function(user, done) {
+  login: function(user) {
     // add logic to generate user authentication token here ...
     // replace this with the actual implementation
     // your persistence system is most likely asynchronous - use a
     // callback or return a promise to handle this
 
-    generateAuthToken(user, function(err, token) {
-      app.token = token;
-      return err ? done(err) : done(null);
+    return new Promise(function(resolve) {
+      generateAuthToken(user, function(err, token) {
+        app.token = token;
+        resolve(user);
+      });
     });
   },
 
@@ -46,7 +46,7 @@ var app = {
    * user. This will allow you to assign the random user the required
    * permission(s).
    */
-  loginRandom: function(done) {
+  loginRandom: function() {
     // create a random user - entirely up to your persistence system
     // add logic to generate user authentication token here ...
     // replace this with the actual implementation
@@ -54,11 +54,18 @@ var app = {
     // callback or return a promise to handle this
 
     // in this example we randomly select one of our mocked users
-    var user = mockUsers[Math.floor(Math.random() * mockUsers.length)];
+    return new Promise(function(resolve) {
+      createUser().then(function(user) {
+        var userData = {
+          username: user.username,
+          password: user.password
+        };
 
-    generateAuthToken(user, function(err, token) {
-      app.token = token;
-      return err ? done(err) : done(null, user);
+        generateAuthToken(userData, function(err, token) {
+          app.token = token;
+          resolve(user);
+        });
+      });
     });
   },
 

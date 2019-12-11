@@ -1,6 +1,6 @@
 var utils = require('./utils');
+var User = require('./models').User;
 
-var findUser = utils.findUser;
 var decodeAuthToken = utils.decodeAuthToken;
 var renderUnAuthorized = utils.renderUnAuthorized;
 
@@ -10,7 +10,18 @@ function checkAuth(req, res, next) {
   }
 
   return decodeAuthToken(req, function(err, reqUser) {
-    return findUser(reqUser) ? next() : renderUnAuthorized(res);
+    if (err) {
+      return renderUnAuthorized(res);
+    }
+
+    var userData = {
+      username: reqUser.username,
+      password: reqUser.password
+    };
+
+    return User.findOne(userData, function(error, user) {
+      return user ? next() : renderUnAuthorized(res);
+    });
   });
 }
 
