@@ -1,18 +1,38 @@
 var app = require('./testUtils/app');
+var factories = require('./testUtils/factories/reports');
+
+var createReport = factories.createReport;
+var makeReport = factories.makeReport;
+
+function reportFields(data) {
+  return { _id: data._id.toString(), title: data.title, body: data.body };
+}
 
 describe('Reports', function() {
+  beforeEach(function() {
+    app.logout();
+  });
+
   describe('GET', function() {
-    it('should not allow unauthenticated users to list all Reports', function(done) {
+    it('should not allow unauthenticated users to list all reports', function(done) {
       app.get('/reports').expect(401, done);
     });
 
     it('should allow authenticated users to list all reports', function(done) {
-      app.loginRandom();
+      createReport().then(function(existingReport) {
+        app.loginRandom().then(function() {
+          app.get('/reports').then(function(res) {
+            expect(res.status).toBe(200);
 
-      app.get('/reports').then(function(res) {
-        expect(res.body.reports).toEqual('All reports');
-        app.logout();
-        done();
+            expect(res.body.reports).toEqual(
+              expect.arrayContaining([
+                expect.objectContaining(reportFields(existingReport))
+              ])
+            );
+
+            done();
+          });
+        });
       });
     });
   });
@@ -23,12 +43,17 @@ describe('Reports', function() {
     });
 
     it('should allow authenticated users to get one report', function(done) {
-      app.loginRandom();
+      createReport().then(function(existingReport) {
+        app.loginRandom().then(function() {
+          app.get('/reports/' + existingReport._id).then(function(res) {
+            expect(res.status).toBe(200);
+            expect(reportFields(res.body.report)).toEqual(
+              reportFields(existingReport)
+            );
 
-      app.get('/reports/6').then(function(res) {
-        expect(res.body.report).toEqual('Report 6');
-        app.logout();
-        done();
+            done();
+          });
+        });
       });
     });
   });
@@ -39,16 +64,21 @@ describe('Reports', function() {
     });
 
     it('should allow authenticated users to get create reports', function(done) {
-      app.loginRandom();
+      var reportData = makeReport();
 
-      app
-        .post('/reports')
-        .send({ title: 'foo' })
-        .then(function(res) {
-          expect(res.body.message).toEqual('Created report foo');
-          app.logout();
-          done();
-        });
+      app.loginRandom().then(function() {
+        app
+          .post('/reports')
+          .send(reportData)
+          .then(function(res) {
+            expect(res.status).toBe(201);
+            expect(res.body.report).toEqual(
+              expect.objectContaining(reportData)
+            );
+
+            done();
+          });
+      });
     });
   });
 
@@ -58,12 +88,20 @@ describe('Reports', function() {
     });
 
     it('should allow authenticated users to update an report', function(done) {
-      app.loginRandom();
+      createReport().then(function(existingReport) {
+        var updates = makeReport();
 
-      app.put('/reports/14').then(function(res) {
-        expect(res.body.message).toEqual('Updated report 14');
-        app.logout();
-        done();
+        app.loginRandom().then(function() {
+          app
+            .put('/reports/' + existingReport._id)
+            .send(updates)
+            .then(function(res) {
+              expect(res.status).toBe(200);
+              expect(res.body.report).toEqual(expect.objectContaining(updates));
+
+              done();
+            });
+        });
       });
     });
   });
@@ -74,12 +112,14 @@ describe('Reports', function() {
     });
 
     it('should allow authenticated users to delete an report', function(done) {
-      app.loginRandom();
+      createReport().then(function(report) {
+        app.loginRandom().then(function() {
+          app.delete('/reports/' + report._id).then(function(res) {
+            expect(res.body.message).toEqual('Report deleted successfully');
 
-      app.delete('/reports/2').then(function(res) {
-        expect(res.body.message).toEqual('Deleted report 2');
-        app.logout();
-        done();
+            done();
+          });
+        });
       });
     });
   });

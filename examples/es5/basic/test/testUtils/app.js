@@ -1,8 +1,6 @@
 var supertest = require('supertest');
 var appDef = require('../../src/app');
-var mock = require('../../src/__mock__');
-
-var mockUsers = mock.mockUsers;
+var createUser = require('./factories/users').createUser;
 
 var app = {
   /**
@@ -50,14 +48,16 @@ var app = {
     // callback or return a promise to handle this
 
     // in this example we randomly select one of our mocked users
-    var user = mockUsers[Math.floor(Math.random() * mockUsers.length)];
+    return new Promise(function(resolve) {
+      createUser().then(function(user) {
+        app.credentials = {
+          username: user.username,
+          password: user.password
+        };
 
-    app.credentials = {
-      username: user.username,
-      password: user.password
-    };
-
-    return user;
+        resolve(user);
+      });
+    });
   },
 
   /**

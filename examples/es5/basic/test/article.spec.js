@@ -1,18 +1,38 @@
 var app = require('./testUtils/app');
+var factories = require('./testUtils/factories/articles');
+
+var createArticle = factories.createArticle;
+var makeArticle = factories.makeArticle;
+
+function articleFields(data) {
+  return { _id: data._id.toString(), title: data.title, body: data.body };
+}
 
 describe('Articles', function() {
+  beforeEach(function() {
+    app.logout();
+  });
+
   describe('GET', function() {
     it('should not allow unauthenticated users to list all articles', function(done) {
       app.get('/articles').expect(401, done);
     });
 
     it('should allow authenticated users to list all articles', function(done) {
-      app.loginRandom();
+      createArticle().then(function(existingArticle) {
+        app.loginRandom().then(function() {
+          app.get('/articles').then(function(res) {
+            expect(res.status).toBe(200);
 
-      app.get('/articles').then(function(res) {
-        expect(res.body.articles).toEqual('All articles');
-        app.logout();
-        done();
+            expect(res.body.articles).toEqual(
+              expect.arrayContaining([
+                expect.objectContaining(articleFields(existingArticle))
+              ])
+            );
+
+            done();
+          });
+        });
       });
     });
   });
@@ -23,12 +43,17 @@ describe('Articles', function() {
     });
 
     it('should allow authenticated users to get one article', function(done) {
-      app.loginRandom();
+      createArticle().then(function(existingArticle) {
+        app.loginRandom().then(function() {
+          app.get('/articles/' + existingArticle._id).then(function(res) {
+            expect(res.status).toBe(200);
+            expect(articleFields(res.body.article)).toEqual(
+              articleFields(existingArticle)
+            );
 
-      app.get('/articles/6').then(function(res) {
-        expect(res.body.article).toEqual('Article 6');
-        app.logout();
-        done();
+            done();
+          });
+        });
       });
     });
   });
@@ -39,16 +64,21 @@ describe('Articles', function() {
     });
 
     it('should allow authenticated users to get create articles', function(done) {
-      app.loginRandom();
+      var articleData = makeArticle();
 
-      app
-        .post('/articles')
-        .send({ title: 'foo' })
-        .then(function(res) {
-          expect(res.body.message).toEqual('Created article foo');
-          app.logout();
-          done();
-        });
+      app.loginRandom().then(function() {
+        app
+          .post('/articles')
+          .send(articleData)
+          .then(function(res) {
+            expect(res.status).toBe(201);
+            expect(res.body.article).toEqual(
+              expect.objectContaining(articleData)
+            );
+
+            done();
+          });
+      });
     });
   });
 
@@ -58,12 +88,22 @@ describe('Articles', function() {
     });
 
     it('should allow authenticated users to update an article', function(done) {
-      app.loginRandom();
+      createArticle().then(function(existingArticle) {
+        var updates = makeArticle();
 
-      app.put('/articles/14').then(function(res) {
-        expect(res.body.message).toEqual('Updated article 14');
-        app.logout();
-        done();
+        app.loginRandom().then(function() {
+          app
+            .put('/articles/' + existingArticle._id)
+            .send(updates)
+            .then(function(res) {
+              expect(res.status).toBe(200);
+              expect(res.body.article).toEqual(
+                expect.objectContaining(updates)
+              );
+
+              done();
+            });
+        });
       });
     });
   });
@@ -74,12 +114,14 @@ describe('Articles', function() {
     });
 
     it('should allow authenticated users to delete an article', function(done) {
-      app.loginRandom();
+      createArticle().then(function(article) {
+        app.loginRandom().then(function() {
+          app.delete('/articles/' + article._id).then(function(res) {
+            expect(res.body.message).toEqual('Article deleted successfully');
 
-      app.delete('/articles/2').then(function(res) {
-        expect(res.body.message).toEqual('Deleted article 2');
-        app.logout();
-        done();
+            done();
+          });
+        });
       });
     });
   });

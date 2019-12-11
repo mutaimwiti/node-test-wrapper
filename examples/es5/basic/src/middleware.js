@@ -1,7 +1,6 @@
 var auth = require('basic-auth');
-var utils = require('./utils');
-
-var findUser = utils.findUser;
+var User = require('./models').User;
+var renderUnAuthorized = require('./utils').renderUnAuthorized;
 
 function checkAuth(req, res, next) {
   if (req.path === '/') {
@@ -16,14 +15,15 @@ function checkAuth(req, res, next) {
       password: reqUser.pass
     };
 
-    if (findUser(user)) {
+    return User.findOne(user, function(err) {
+      if (err) {
+        return renderUnAuthorized(res);
+      }
       return next();
-    }
+    });
   }
 
-  return res.status(401).json({
-    message: 'Unauthorized'
-  });
+  return renderUnAuthorized(res);
 }
 
 module.exports.checkAuth = checkAuth;
